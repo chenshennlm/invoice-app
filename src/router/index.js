@@ -15,6 +15,8 @@ import RegisterByPhone from '../components/Register/RegisterByPhone';
 import ForgetWithPhone from '../components/Forget/ForgetWithPhone';
 import Home from '../components/Home/Home';
 import Mine from '../components/Mine/Mine';
+import MyInvoice from '../components/Mine/MyInvoice';
+import MyInvoiceImg from '../components/Mine/MyInvoiceImg';
 
 Vue.use(Router)
 
@@ -41,6 +43,16 @@ export default new Router({
           component: Mine
         },
       ],
+    },
+    {
+      path: '/mine/myinvoice',
+      name: 'MyInvoice',
+      component: MyInvoice
+    },
+    {
+      path: '/mine/myinvoiceimg',
+      name: 'MyInvoiceImg',
+      component: MyInvoiceImg
     },
     {
       path: '/login/first',

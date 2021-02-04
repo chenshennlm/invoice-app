@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="index">
     <router-view />
     <div>
       <van-tabbar route v-model="active">
@@ -42,4 +42,8 @@ export default {
 </script>
 
 <style scoped>
+#index{
+  background-color: #F7F8FA;
+  height: 100vh;
+}
 </style>

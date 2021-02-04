@@ -5,7 +5,8 @@ import App from './App'
 import router from './router'
 import less from 'less';
 import 'vant/lib/index.css';
-import { Button, NavBar, Image, Form, Field, Radio, RadioGroup, Icon, Toast, Tabbar, TabbarItem } from 'vant';
+import { Button, NavBar, Image, Form, Field, Radio, RadioGroup, Icon, Tab, Tabs, List,
+  Toast, Tabbar, TabbarItem, Tag, Cell, CellGroup, DatetimePicker, Popup, Empty  } from 'vant';
 
 Vue.config.productionTip = false
 Vue.use(less)
@@ -21,6 +22,15 @@ Vue.use(Icon);
 Vue.use(Toast);
 Vue.use(Tabbar);
 Vue.use(TabbarItem);
+Vue.use(Tag);
+Vue.use(Cell);
+Vue.use(CellGroup);
+Vue.use(DatetimePicker);
+Vue.use(Popup);
+Vue.use(Tab);
+Vue.use(Tabs);
+Vue.use(List);
+Vue.use(Empty);
 
 /* eslint-disable no-new */
 new Vue({
