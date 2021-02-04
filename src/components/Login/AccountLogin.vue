@@ -1,6 +1,6 @@
 <template>
   <div id="account_login">
-    <van-nav-bar title="账号登录" left-arrow @click-left="onClickLeft" />
+    <van-nav-bar title="账号登录" left-arrow @click-left="onClickLeft" fixed/>
     <div id="account_login_head">
       <van-image
         round
@@ -16,38 +16,55 @@
       <van-form @submit="onSubmit">
         <van-field
           v-model="username"
-          name="账号"
+          name="username"
           label="账号"
           placeholder="请输入账号"
-          :rules="[{ required: true, message: '请填写账号' }]"
+          :rules="[
+            { required: true, message: '请填写密码' },
+            {
+              pattern: /^[0-9a-zA-Z]{6,18}$/,
+              message: '限定位数6-18位，仅可输入数字、字母(区分大小写)',
+            },
+          ]"
         />
         <van-field
           v-model="password"
           type="password"
-          name="密码"
+          name="password"
           label="密码"
           placeholder="请输入密码"
           :rules="[{ required: true, message: '请填写密码' }]"
         />
         <van-field
           v-model="code"
-          name="验证码"
+          name="code"
           label="验证码"
           placeholder="请输入验证码"
-          :rules="[{ required: true, message: '请填写验证码' }]"
+          :rules="[
+            { required: true, message: '请填写验证码' },
+            { validator: this.checkVerification, message:'验证码错误' },
+          ]"
         >
           <template #button>
-            <van-button size="small" type="default" @click="getCode"
-              >动态密码</van-button
-            >
+            <s-identifyTool ref="code" />
           </template>
         </van-field>
-        <van-field name="isRead" :border="false">
+        <van-field name="isRead" :border="false"
+          :rules="[{required: true, message: '请勾选' }]"
+        >
           <template #input>
-            <van-radio-group v-model="radio" direction="horizontal" @change="radioChange">
-              <van-radio name="1">
-                  <span class="account_login_form_read">我已阅读</span>
-                  <span class="account_login_form_treaty">《会计APP用户协议》</span>
+            <van-radio-group
+              v-model="radio"
+              direction="horizontal"
+              @change="radioChange"
+            >
+              <van-radio name="1" @click="radioClick">
+                <span class="account_login_form_read">我已阅读</span>
+                <span
+                  class="account_login_form_treaty"
+                  @click="$router.push('/treaty')"
+                  >《会计APP用户协议》</span
+                >
               </van-radio>
             </van-radio-group>
           </template>
@@ -61,14 +78,17 @@
       >手机号登录</a
     >
     <div id="account_login_foot">
-      <div><a>忘记密码？</a></div>
-      <div><a>立即注册</a></div>
+      <div><a @click="$router.push('/forget')">忘记密码？</a></div>
+      <div><a @click="$router.push('/register')">立即注册</a></div>
     </div>
   </div>
 </template>
 
 <script>
 import router from "../../router/index";
+import { verifyAccount } from "../../action/LoginAction";
+import IdentifyTool from "../../tool/UseIdentify";
+import  {Toast} from 'vant';
 
 export default {
   name: "AccountLogin",
@@ -78,24 +98,49 @@ export default {
       password: "",
       code: "",
       radio: "",
+      radioState: 0, //0:初始未选中 1：选中了
+      identifyCode: "",
     };
   },
+  components: {
+    //设置标签名
+    "s-identifyTool": IdentifyTool,
+  },
   methods: {
-      radioChange(e){
-          console.log('--e', e);
-      },
-    getCode() {
-      console.log("eee");
+    radioClick(e) {
+      console.log("e--", e);
+      //this.radioState = this.radioState == 0 ? 1 : 0;
+      //this.radio = this.radioState + "";
+    },
+    radioChange(e) {
+      console.log("--e", e);
+    },
+    //图片验证码验证
+    checkVerification(values, rule) {
+      if (this.identifyCode != values) {
+           this.$refs.code.refreshCode();
+           return false;
+        }
     },
     /**登录提交 */
     onSubmit(values) {
-      console.log("submit", values);
+      verifyAccount(values.username, values.password).then((res) => {
+        console.log(res);
+        if(res.data.password != values.password) {
+          Toast.fail({message:'密码错误', position: 'top'});
+        } else {
+          router.push({name: "Mine", query:{id:values.username}});
+        }
+      });
     },
     /**左上角返回键 */
     onClickLeft() {
-      console.log("---fff");
+      router.push('/mine');
     },
   },
+  mounted(){
+    this.identifyCode = this.$refs.code.identifyCode;
+  }
 };
 </script>
 
@@ -107,10 +152,10 @@ a {
 #account_login_head {
   margin: 0 auto;
   width: 10rem;
-  margin-top: 2rem;
+  margin-top: 5rem;
 }
 #account_login_form {
-  margin-top: 5rem;
+  margin-top: 3rem;
   padding: 0 1rem;
 }
 .account_login_form_code {
@@ -124,16 +169,14 @@ a {
   margin-top: 1rem;
   color: #666666;
 }
-.account_login_form_read{
-    
-font-family: PingFangSC-Regular, PingFang SC;
-color: #CCCCCC;
+.account_login_form_read {
+  font-family: PingFangSC-Regular, PingFang SC;
+  color: #cccccc;
 }
-.account_login_form_treaty{
-    
-font-family: PingFangSC-Regular, PingFang SC;
-font-weight: 400;
-color: #108EE9;
+.account_login_form_treaty {
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #108ee9;
 }
 .van-nav-bar /deep/ .van-icon {
   color: #333333;

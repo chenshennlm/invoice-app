@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import less from 'less';
 import 'vant/lib/index.css';
-import { Button, NavBar, Image, Form, Field, Radio, RadioGroup } from 'vant';
+import { Button, NavBar, Image, Form, Field, Radio, RadioGroup, Icon, Toast, Tabbar, TabbarItem } from 'vant';
 
 Vue.config.productionTip = false
 Vue.use(less)
@@ -17,6 +17,10 @@ Vue.use(Form);
 Vue.use(Field);
 Vue.use(Radio);
 Vue.use(RadioGroup);
+Vue.use(Icon);
+Vue.use(Toast);
+Vue.use(Tabbar);
+Vue.use(TabbarItem);
 
 /* eslint-disable no-new */
 new Vue({

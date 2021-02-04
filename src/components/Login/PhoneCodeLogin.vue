@@ -1,12 +1,12 @@
 <template>
   <div id="phone_login">
-    <van-nav-bar title="账号登录" left-arrow @click-left="onClickLeft" fixed/>
+    <van-nav-bar title="账号登录" left-arrow @click-left="onClickLeft" fixed />
     <div id="phone_login_head">
       <van-image
         round
         width="10rem"
         height="10rem"
-        src="https://img01.yzcdn.cn/vant/leaf.jpeg"
+        src="https://img01.yzcdn.cn/vant/leaf.jpg"
         alt="头像"
       >
         <template v-slot:error>加载失败</template>
@@ -16,18 +16,10 @@
       <van-form @submit="onSubmit">
         <van-field
           v-model="phone"
-          name="phone"
+          name="手机号"
           label="手机号"
           placeholder="请输入手机号"
           :rules="[{ required: true, message: '请填写手机号' }]"
-        />
-        <van-field
-          v-model="password"
-          type="password"
-          name="密码"
-          label="密码"
-          placeholder="请输入密码"
-          :rules="[{ required: true, message: '请填写密码' }]"
         />
         <van-field
           v-model="code"
@@ -40,7 +32,22 @@
           ]"
         >
           <template #button>
-            <s-identifyTool ref="code" />
+            <van-button
+              v-if="flag == 0"
+              size="small"
+              type="default"
+              @click="getCode"
+              native-type="button"
+              >动态密码</van-button
+            >
+            <van-button
+              v-else
+              disabled
+              size="small"
+              type="default"
+              native-type="button"
+              >（{{ time }}）</van-button
+            >
           </template>
         </van-field>
         <van-field
@@ -68,62 +75,64 @@
       </van-form>
     </div>
     <a style="color: #108ee9" @click="$router.push('/login/account')"
-      >手机号登录</a
+      >账号登录</a
     >
-    <a class="phone_login_to_code" @click="$router.push('/login/phoneCode')"
-      >验证码登录</a
+    <a class="phone_login_to_code" @click="$router.push('/login/phone')"
+      >密码登录</a
     >
   </div>
 </template>
 
 <script>
-import IdentifyTool from "../../tool/UseIdentify";
-import { verifyAccount } from "../../action/LoginAction";
+import { getCodeByPhone } from "../../action/LoginAction";
 import router from '../../router/index';
 
 export default {
-  name: "PhoneLogin",
+  name: "PhoneCodeLogin",
   data() {
     return {
       phone: "",
       password: "",
       code: "",
       radio: "",
-      identifyCode: "",
+      verifyCode: "",
+      flag: 0, //0: 可获取验证码 1：倒计时状态
+      time: 60, //倒计时
     };
   },
-  components: {
-    //设置标签名
-    "s-identifyTool": IdentifyTool,
-  },
   methods: {
-    //图片验证码验证
+    /**根据手机号得到验证码 */
+    getCode() {
+      getCodeByPhone(this.phone).then((res) => {
+        console.log("---res", res);
+        this.verifyCode = res.code;
+        this.flag = 1;
+        let intervId = setInterval(() => {
+          this.time = this.time - 1;
+          if (this.time == 0) {
+            clearInterval(intervId);
+            this.flag = 0;
+            this.time = 60;
+          }
+        }, 1000);
+      });
+    },
+    /**检查验证码是否正确 */
     checkVerification(values) {
-      if (this.identifyCode != values) {
-        this.$refs.code.refreshCode();
+      if (values != this.verifyCode) {
         return false;
       }
     },
     /**登录提交 */
     onSubmit(values) {
       console.log("submit", values);
-     verifyAccount(values.phone, values.password).then((res) => {
-        console.log(res);
-        if(res.data.password != values.password) {
-          Toast.fail({message:'密码错误', position: 'top'});
-        } else {
-          router.push({name: "Mine", query:{id:values.phone}});
-        }
-      });
+      router.push({ name: "Mine", query: { id: values.phone } });
     },
     /**左上角返回键 */
     onClickLeft() {
-      router.push('/mine');
+      router.push("/mine");
     },
   },
-  mounted(){
-    this.identifyCode = this.$refs.code.identifyCode;
-  }
 };
 </script>
 
@@ -135,7 +144,7 @@ a {
 #phone_login_head {
   margin: 0 auto;
   width: 10rem;
-  margin-top: 5rem;
+  margin-top: 2rem;
 }
 #phone_login_form {
   margin-top: 3rem;
