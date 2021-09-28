@@ -117,6 +117,7 @@ export default {
     },
     //图片验证码验证
     checkVerification(values, rule) {
+      console.log(this.identifyCode);
       if (this.identifyCode != values) {
            this.$refs.code.refreshCode();
            return false;

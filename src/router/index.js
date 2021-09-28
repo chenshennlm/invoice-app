@@ -23,7 +23,7 @@ import SetUp from '../components/Mine/SetUp';
 import Agreement from '../components/Mine/Agreement';
 import AboutUs from '../components/Mine/AboutUs';
 import EditInfo from '../components/Mine/EditInfo';
-
+import Upload from "../components/Home/children/upload"
 Vue.use(Router)
 
 const originalPush = Router.prototype.push;
@@ -151,6 +151,11 @@ export default new Router({
       path: '/hello',
       name: 'HelloWorld',
       component: HelloWorld
+    },
+    {
+      path:'/upload',
+      name:"Upload",
+      component:Upload
     }
   ]
 })

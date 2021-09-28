@@ -70,10 +70,7 @@ Mock.Random.extend({
 })
 //---------------------------------------------------------------------------
 
-//模拟后台的端口
-app.listen('8090', () => {
-    console.log('监听端口8090')
-})
+
 
 //跨域啊，不知道原因，但是用cors可以了
 app.use(cors({
@@ -82,6 +79,7 @@ app.use(cors({
 }));
 
 //Login--获取账号密码验证登录信息是否正确
+
 app.use('/verifyAccount', function (req, res) {
     res.json(Mock.mock({
         'state': 200,
@@ -533,4 +531,10 @@ app.use('/resetName', function (req, res) {
     res.json(Mock.mock({
         'state|1-2': 1,//1:重置成功 2：重置失败
     }))
+})
+
+
+//模拟后台的端口
+app.listen('8090', () => {
+    console.log('监听端口8090')
 })

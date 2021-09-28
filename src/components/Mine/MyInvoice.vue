@@ -142,7 +142,6 @@
 import router from "../../router/index";
 import { getMonthThroughStr } from "../../tool/GetDate";
 import { getInvoiceList } from "../../action/MineAction";
-
 export default {
   name: "MyInvoice",
   data() {
