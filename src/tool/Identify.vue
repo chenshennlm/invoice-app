@@ -13,7 +13,7 @@ export default {
     // 字体最小值
     fontSizeMin: {
       type: Number,
-      default: 28
+      default: 30
     },
     // 字体最大值
     fontSizeMax: {
@@ -23,7 +23,7 @@ export default {
     // 背景颜色色值最小值，最小为0
     backgroundColorMin: {
       type: Number,
-      default: 200
+      default: 220
     },
     // 背景颜色色值最大值，最大为255
     backgroundColorMax: {
@@ -38,22 +38,22 @@ export default {
     // 字体颜色色值最大值，最大为255
     colorMax: {
       type: Number,
-      default: 180
+      default: 120
     },
     // 干扰线颜色色值最小值，最小为0
     lineColorMin: {
       type: Number,
-      default: 150
+      default: 200
     },
     // 干扰线颜色色值最大值，最大为255
     lineColorMax: {
       type: Number,
-      default: 200
+      default: 240
     },
     // 干扰点颜色色值最小值，最小为0
     dotColorMin: {
       type: Number,
-      default: 100
+      default: 220
     },
     // 干扰点颜色色值最大值，最大为255
     dotColorMax: {
@@ -127,7 +127,7 @@ export default {
       ctx.font = this.randomNum(this.fontSizeMin, this.fontSizeMax) + 'px SimHei'
       let x = (i + 1) * (this.contentWidth / (this.identifyCode.length + 1))
       let y = this.randomNum(this.fontSizeMax, this.contentHeight - 5)
-      let deg = this.randomNum(-45, 45)
+      let deg = this.randomNum(-45, 30)
       // 修改坐标原点和旋转角度
       ctx.translate(x, y)
       //旋转角度
@@ -143,7 +143,7 @@ export default {
      * @param {object} ctx canvas上下文对象
      */
     drawLine (ctx) {
-      for (let i = 0; i < 8; i++) {
+      for (let i = 0; i < 6; i++) {
         ctx.strokeStyle = this.randomColor(this.lineColorMin, this.lineColorMax)
         ctx.beginPath()
         //定义线条开始坐标
@@ -160,7 +160,7 @@ export default {
      * @param {object} ctx canvas上下文对象
      */
     drawDot (ctx) {
-      for (let i = 0; i < 60; i++) {
+      for (let i = 0; i < 50; i++) {
         //填色
         ctx.fillStyle = this.randomColor(0, 255)
         ctx.beginPath()

@@ -34,7 +34,7 @@
               :finished="finished"
               finished-text="没有更多了"
               @load="onLoad"
-              :immediate-check='false'
+              :immediate-check="false"
             >
               <div style="overflow: hidden">
                 <van-cell
@@ -70,10 +70,9 @@
               :finished="finished"
               finished-text="没有更多了"
               @load="onLoad"
-              :immediate-check='false'
+              :immediate-check="false"
             >
               <div style="overflow: hidden">
-                "
                 <van-cell
                   style="min-height: 1rem"
                   v-for="(item, index) in listdata"
@@ -106,10 +105,9 @@
               :finished="finished"
               finished-text="没有更多了"
               @load="onLoad"
-              :immediate-check='false'
+              :immediate-check="false"
             >
               <div style="overflow: hidden">
-                "
                 <van-cell
                   style="min-height: 1rem"
                   v-for="(item, index) in listdata"
@@ -154,7 +152,7 @@ export default {
       maxDate: new Date(2025, 10, 1),
       currentDate: new Date(),
       show: false, //是否展出弹框层
-      selectedDate: "所有",
+      selectedDate: "", //取年月，2021/9
       active: 0,
       year: "",
       month: "",
@@ -181,10 +179,19 @@ export default {
     // },
   },
   methods: {
+    initData() {
+      //取年月，2021/09
+      var nowDate = new Date();
+      this.selectedDate =
+        nowDate.getFullYear() +
+        "/" +
+        getMonthThroughStr(nowDate.constructor().substr(4, 3));
+    },
     /**跳转到票据查看页面 */
     gotoInvoiceImg(event) {
       console.log("event---", event);
     },
+    
     formatter(type, val) {
       if (type === "year") {
         return `${val}年`;
@@ -219,33 +226,33 @@ export default {
       this.getInvoiceList(key, 0, 0);
     },
     getInvoiceList(key = "", start = 0, listSize = this.listdata.length) {
-      getInvoiceList(
-        start,
-        this.size,
-        this.account,
-        this.year,
-        this.month,
-        key
-      ).then((res) => {
-        this.loading = false;
-        let total = res.total;
-        if (listSize > 0 && listSize <= total) {
-          //继续加载
-          let temp = this.listdata;
-          for (let i = 0; i < this.size; i++) {
-            temp.push(res.data[i]);
-          }
-          this.listdata = temp;
-          console.log("---temp---", temp.length);
-          if (temp.length >= total) {
-            this.finished = true;
-          }
-        } else {
-          this.listdata = res.data;
-        }
-        this.start = start + 8;
-        this.total = total;
-      });
+      // getInvoiceList(
+      //   start,
+      //   this.size,
+      //   this.account,
+      //   this.year,
+      //   this.month,
+      //   key
+      // ).then((res) => {
+      //   this.loading = false;
+      //   let total = res.total;
+      //   if (listSize > 0 && listSize <= total) {
+      //     //继续加载
+      //     let temp = this.listdata;
+      //     for (let i = 0; i < this.size; i++) {
+      //       temp.push(res.data[i]);
+      //     }
+      //     this.listdata = temp;
+      //     console.log("---temp---", temp.length);
+      //     if (temp.length >= total) {
+      //       this.finished = true;
+      //     }
+      //   } else {
+      //     this.listdata = res.data;
+      //   }
+      //   this.start = start + 8;
+      //   this.total = total;
+      // });
     },
     onLoad() {
       let oldSize = this.listdata.length;
@@ -264,6 +271,7 @@ export default {
   },
   mounted() {
     this.account = router.history.current.query.id;
+    this.initData();
     this.getInvoiceList();
   },
 };

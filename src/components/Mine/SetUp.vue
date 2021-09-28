@@ -70,14 +70,32 @@ export default {
         uuid: "a4fsa64f6a3d6a5",
         nickname: "周大侠",
         roleName: "管理员",
+        roleType: "2",
         phoneNum: "17766665555",
         Email: "123456789@caidao8.com",
       };
+      if (this.userInfo.phoneNum) {
+        this.userInfo.phoneNum =
+          this.userInfo.phoneNum.slice(0, 3) +
+          "***" +
+          this.userInfo.phoneNum.slice(-4);
+      }
+      if (this.userInfo.Email) {
+        this.userInfo.Email =
+          this.userInfo.Email.slice(0, 1) +
+          "***" +
+          this.userInfo.Email.slice(this.userInfo.Email.indexOf('@'));
+      }
     },
     edit(type) {
+      console.log(type);
+      var value = escape(this.userInfo[type]);
+      if (type == "roleName") {
+        value = this.userInfo.roleType;
+      }
       this.$router.push({
         name: "EditInfo",
-        query: { EDIT_USER_INFO: type, EDIT_VALUE: escape(this.userInfo[type]) },
+        query: { EDIT_USER_INFO: type, EDIT_VALUE: value },
       });
     },
     openPage(path) {

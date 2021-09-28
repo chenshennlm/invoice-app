@@ -9,6 +9,7 @@ import {
   Button, NavBar, Image, Form, Field, Radio, RadioGroup, Icon, Tab, Tabs, List,
   Toast, Tabbar, TabbarItem, Tag, Cell, CellGroup, DatetimePicker, Popup, Empty, Dialog
 } from 'vant';
+import store from 'tool/store.js'
 
 Vue.config.productionTip = false
 
@@ -40,5 +41,6 @@ new Vue({
   el: '#app',
   router,
   components: { App },
+  store,
   template: '<App/>'
 })
