@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { baseURL } from '../router/baseURL';
-
+// import {verifyAccount} from "./MineAction";
 /**
  * 验证账号密码
  * @param {string} account 
@@ -11,7 +11,9 @@ export function verifyAccount(account='', password='') {
         account: account,
         password: password
     }
+    console.log(param);
     return new Promise((resolve, reject) => {
+        console.log(111);
         axios.post(baseURL + 'verifyAccount', param)
             .then(res => {
                 //将获取数据 同个 Promise 格式传递回 Page A

@@ -6,7 +6,7 @@ import router from './router'
 import less from 'less';
 import 'vant/lib/index.css';
 import { Button, NavBar, Image, Form, Field, Radio, RadioGroup, Icon, Tab, Tabs, List,
-  Toast, Tabbar, TabbarItem, Tag, Cell, CellGroup, DatetimePicker, Popup, Empty  } from 'vant';
+  Toast, Tabbar, TabbarItem, Tag, Cell, CellGroup, DatetimePicker, Popup, Empty,NoticeBar,Uploader   } from 'vant';
 
 Vue.config.productionTip = false
 Vue.use(less)
@@ -31,6 +31,8 @@ Vue.use(Tab);
 Vue.use(Tabs);
 Vue.use(List);
 Vue.use(Empty);
+Vue.use(NoticeBar);
+Vue.use(Uploader );
 
 /* eslint-disable no-new */
 new Vue({

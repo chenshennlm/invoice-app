@@ -148,7 +148,7 @@ export default {
          */
         shuffle (str) {
             this.identifyCode = [...str].sort(() => Math.random() - 0.5).join('')
-            console.log(this.identifyCode);
+            // console.log(this.identifyCode);
         },
         /**
          * 更换图片验证码
