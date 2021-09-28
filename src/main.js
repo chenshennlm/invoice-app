@@ -5,12 +5,38 @@ import App from './App'
 import router from './router'
 import less from 'less';
 import 'vant/lib/index.css';
-import { Button, NavBar, Image, Form, Field, Radio, RadioGroup, Icon, Tab, Tabs, List,
-  Toast, Tabbar, TabbarItem, Tag, Cell, CellGroup, DatetimePicker, Popup, Empty,NoticeBar,Uploader   } from 'vant';
+
+import {
+  Button,
+  NavBar,
+  Image,
+  Form,
+  Field,
+  Radio,
+  RadioGroup,
+  Icon,
+  Tab,
+  Tabs,
+  List,
+  Toast,
+  Tabbar,
+  TabbarItem,
+  Tag,
+  Cell,
+  CellGroup,
+  DatetimePicker,
+  Popup,
+  Empty,
+  Dialog,
+  NoticeBar,
+  Uploader
+} from 'vant';
+
 
 Vue.config.productionTip = false
-Vue.use(less)
 
+Vue.use(Dialog)
+Vue.use(less)
 Vue.use(Button);
 Vue.use(NavBar);
 Vue.use(Image);
@@ -32,12 +58,14 @@ Vue.use(Tabs);
 Vue.use(List);
 Vue.use(Empty);
 Vue.use(NoticeBar);
-Vue.use(Uploader );
+Vue.use(Uploader);
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
-  components: { App },
+  components: {
+    App
+  },
   template: '<App/>'
 })
