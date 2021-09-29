@@ -47,7 +47,7 @@
       />
       <div id="mine_info_detail">
         <div class="user-name">
-          {{ info.userName ? info.userName : "未登录" }}
+          {{ info.nickname ? info.nickname : "未登录" }}
         </div>
         <van-tag plain type="primary">
           {{
@@ -64,12 +64,7 @@
     </div>
     <div id="mine_action">
       <div id="mine_action_invoice">
-        <img
-          :src="icon.invoice"
-          @click="
-            $router.push({ name: 'MyInvoice', query: { id: info.account } })
-          "
-        />
+        <img :src="icon.invoice" @click="goMyInvoice" />
         <p>我的凭证</p>
       </div>
       <div id="mine_action_undealed">
@@ -121,7 +116,7 @@ export default {
     getMineDetail(account = "") {
       this.info = {
         icon: "https://img01.yzcdn.cn/vant/cat.jpeg",
-        userName: "Lisa",
+        nickname: "周大侠",
         level: "1",
         uuid: "4f5a4s5d4a5sdas4d564",
         account: "17766666665",
@@ -130,6 +125,20 @@ export default {
       //   console.log("---res", res);
       //   this.info = res.data;
       // });
+    },
+
+    goMyInvoice() {
+      if (this.info.level == "1") {
+        this.$router.push({
+          name: "AdminInvoice",
+          query: { id: this.info.account },
+        });
+      } else {
+        this.$router.push({
+          name: "MyInvoice",
+          query: { id: this.info.account },
+        });
+      }
     },
   },
   mounted() {

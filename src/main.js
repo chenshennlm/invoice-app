@@ -29,13 +29,17 @@ import {
   Empty,
   Dialog,
   NoticeBar,
-  Uploader
+  Uploader,
+  Card,
+  ImagePreview
 } from 'vant';
 import store from 'tool/store.js'
 
 
 Vue.config.productionTip = false
 
+Vue.use(ImagePreview)
+Vue.use(Card)
 Vue.use(Dialog)
 Vue.use(less)
 Vue.use(Button);

@@ -284,4 +284,10 @@ export default {
 #myinvoice_tabs {
   margin-top: 1rem;
 }
+#myinvoice >>> .van-tab--active{
+  color: #108EE9;
+}
+#myinvoice >>> .van-tabs__line{
+  background-color: #108EE9;
+}
 </style>
