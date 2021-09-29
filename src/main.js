@@ -29,7 +29,9 @@ import {
   Empty,
   Dialog,
   NoticeBar,
-  Uploader
+  Uploader,
+  SwipeCell,
+  DropdownMenu, DropdownItem
 } from 'vant';
 import store from 'tool/store.js'
 
@@ -60,7 +62,9 @@ Vue.use(List);
 Vue.use(Empty);
 Vue.use(NoticeBar);
 Vue.use(Uploader);
-
+Vue.use(SwipeCell);
+Vue.use(DropdownMenu);
+Vue.use( DropdownItem);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
