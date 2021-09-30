@@ -1,14 +1,10 @@
-<template>
-  
-</template>
+<template></template>
 
 <script>
 export default {
-    name: 'MyInvoiceImg',
-
-}
+  name: "InvoiceExamine",
+};
 </script>
 
 <style scoped>
-
 </style>

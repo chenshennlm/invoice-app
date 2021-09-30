@@ -4,52 +4,34 @@
       title="我的凭证"
       left-arrow
       @click-left="$router.push('/mine')"
-    >
-      <template #left>
-        <van-icon name="arrow-left" color="#666666" size="16" />
-      </template>
-    </van-nav-bar>
+    />
     <div id="myinvoice_head">
-      <div>
-        <van-cell @click="showPopup">
-          <template #title> 查询月份 </template>
-          <template #default>
-            <van-tag type="primary" plain>{{ selectedDate }}</van-tag>
-          </template>
-        </van-cell>
-        <van-popup v-model="show" position="bottom" :style="{ height: '40%' }">
-          <van-datetime-picker
-            v-model="currentDate"
-            type="year-month"
-            title="选择年月"
-            :min-date="minDate"
-            :max-date="maxDate"
-            :formatter="formatter"
-            @confirm="setDate"
-            ref="date"
-          />
-        </van-popup>
-      </div>
-      <div id="myinvoice_tabs">
-        <van-tabs v-model="active" @click="changeTab">
-          <van-tab title="全部票据"></van-tab>
-          <van-tab title="我审核的"></van-tab>
-          <van-tab title="我的票据"></van-tab>
-        </van-tabs>
-      </div>
-      <div id="myinvoice_tags">
-        <div :class="[{ activedBox: typeActive == 1 }]" @click="selectType(1)">
-          全部
-        </div>
-        <div :class="[{ activedBox: typeActive == 2 }]" @click="selectType(2)">
-          有效
-        </div>
-        <div :class="[{ activedBox: typeActive == 3 }]" @click="selectType(3)">
-          无效
-        </div>
-      </div>
+      <van-cell @click="showPopup">
+        <template #title> 查询月份 </template>
+        <template #default>
+          <van-tag type="primary" plain>{{ selectedDate }}</van-tag>
+        </template>
+      </van-cell>
+      <van-popup v-model="show" position="bottom" :style="{ height: '40%' }">
+        <van-datetime-picker
+          v-model="currentDate"
+          type="year-month"
+          title="选择年月"
+          :min-date="minDate"
+          :max-date="maxDate"
+          :formatter="formatter"
+          @confirm="setDate"
+          ref="date"
+        />
+      </van-popup>
     </div>
-
+    <div id="myinvoice_tabs">
+      <van-tabs v-model="active" @click="changeTab">
+        <van-tab title="全部票据"></van-tab>
+        <van-tab title="有效票据"></van-tab>
+        <van-tab title="无效票据"> </van-tab>
+      </van-tabs>
+    </div>
     <div class="list-box">
       <van-list
         v-model="loading"
@@ -70,7 +52,7 @@
             "
             is-link
             center
-            :to="'AdminInvoiceDetail?id=' + item.uuid"
+            :to="'MyInvoiceImg?id=' + item.uuid + '&title=' + item.title"
           >
             <template #default>
               <span class="diy-content">{{ item.count }}</span>
@@ -84,9 +66,7 @@
 </template>
 
 <script>
-import router from "../../router/index";
-import { getMonthThroughStr } from "../../tool/GetDate";
-import { getData } from "../../action/MineAction";
+import { getMonthThroughStr } from "../../../tool/GetDate";
 
 const dataBase = [
   {
@@ -97,6 +77,7 @@ const dataBase = [
     reviewer: "周大侠",
     reviewerId: "y4jf561hn3fd1g6s4f65",
     declarant: "张三",
+    isValid: "1",
   },
   {
     uuid: "",
@@ -106,6 +87,7 @@ const dataBase = [
     reviewer: "周大侠",
     reviewerId: "y4jf561hn3fd1g6s4f65",
     declarant: "李四",
+    isValid: "2",
   },
   {
     uuid: "",
@@ -116,6 +98,7 @@ const dataBase = [
     reviewerId: "",
     declarant: "周大侠",
     declarantId: "y4jf561hn3fd1g6s4f65",
+    isValid: "1",
   },
   {
     uuid: "",
@@ -125,6 +108,7 @@ const dataBase = [
     reviewer: "周大侠",
     reviewerId: "y4jf561hn3fd1g6s4f65",
     declarant: "张三",
+    isValid: "2",
   },
   {
     uuid: "",
@@ -134,6 +118,7 @@ const dataBase = [
     reviewer: "周大侠",
     reviewerId: "y4jf561hn3fd1g6s4f65",
     declarant: "李四",
+    isValid: "1",
   },
   {
     uuid: "",
@@ -144,6 +129,7 @@ const dataBase = [
     reviewerId: "",
     declarant: "周大侠",
     declarantId: "y4jf561hn3fd1g6s4f65",
+    isValid: "2",
   },
   {
     uuid: "",
@@ -153,6 +139,7 @@ const dataBase = [
     reviewer: "周大侠",
     reviewerId: "y4jf561hn3fd1g6s4f65",
     declarant: "张三",
+    isValid: "1",
   },
   {
     title: "2021年9月招待报销",
@@ -161,6 +148,7 @@ const dataBase = [
     reviewer: "周大侠",
     reviewerId: "y4jf561hn3fd1g6s4f65",
     declarant: "李四",
+    isValid: "2",
   },
   {
     uuid: "",
@@ -171,6 +159,7 @@ const dataBase = [
     reviewerId: "",
     declarant: "周大侠",
     declarantId: "y4jf561hn3fd1g6s4f65",
+    isValid: "1",
   },
   {
     uuid: "",
@@ -180,6 +169,7 @@ const dataBase = [
     reviewer: "周大侠",
     reviewerId: "y4jf561hn3fd1g6s4f65",
     declarant: "张三",
+    isValid: "2",
   },
   {
     title: "2021年9月招待报销",
@@ -188,6 +178,7 @@ const dataBase = [
     reviewer: "周大侠",
     reviewerId: "y4jf561hn3fd1g6s4f65",
     declarant: "李四",
+    isValid: "1",
   },
   {
     uuid: "",
@@ -198,6 +189,7 @@ const dataBase = [
     reviewerId: "",
     declarant: "周大侠",
     declarantId: "y4jf561hn3fd1g6s4f65",
+    isValid: "2",
   },
   {
     uuid: "",
@@ -207,6 +199,7 @@ const dataBase = [
     reviewer: "周大侠",
     reviewerId: "y4jf561hn3fd1g6s4f65",
     declarant: "张三",
+    isValid: "1",
   },
   {
     uuid: "",
@@ -216,6 +209,7 @@ const dataBase = [
     reviewer: "周大侠",
     reviewerId: "y4jf561hn3fd1g6s4f65",
     declarant: "李四",
+    isValid: "2",
   },
   {
     uuid: "",
@@ -226,10 +220,11 @@ const dataBase = [
     reviewerId: "",
     declarant: "周大侠",
     declarantId: "y4jf561hn3fd1g6s4f65",
+    isValid: "1",
   },
 ];
 export default {
-  name: "AdminInvoice",
+  name: "MyInvoice",
   data() {
     return {
       account: "", //当前登录的账号
@@ -239,7 +234,6 @@ export default {
       show: false, //是否展出弹框层
       selectedDate: "", //取年月，2021/9
       active: 0,
-      typeActive: 1,
       year: "",
       month: "",
       listdata: [],
@@ -257,12 +251,6 @@ export default {
       },
       deep: true,
     },
-    // listdata: {
-    //   handler: function (val, oldVal) {
-    //     console.log("val---", val, "---oldval", oldVal);
-    //   },
-    //   deep: true,
-    // },
   },
   methods: {
     initData() {
@@ -307,10 +295,8 @@ export default {
      */
     changeTab(key = "") {
       this.start = 0;
-      this.typeActive = 1;
       this.finished = false;
       this.loading = false;
-      console.log(key);
       this.getData();
     },
     getData() {
@@ -319,14 +305,10 @@ export default {
           this.listdata = dataBase;
           break;
         case 1:
-          this.listdata = dataBase.filter(
-            (item) => item.reviewerId == "y4jf561hn3fd1g6s4f65"
-          );
+          this.listdata = dataBase.filter((item) => item.isValid == "1");
           break;
         case 2:
-          this.listdata = dataBase.filter(
-            (item) => item.declarantId == "y4jf561hn3fd1g6s4f65"
-          );
+          this.listdata = dataBase.filter((item) => item.isValid == "2");
       }
       // getInvoiceList(
       //   start,
@@ -370,12 +352,9 @@ export default {
       //   this.finished = true;
       // }
     },
-    selectType(type) {
-      this.typeActive = type;
-    },
   },
   mounted() {
-    this.account = router.history.current.query.id;
+    this.account = this.$route.query.id;
     this.initData();
     this.getData();
   },
@@ -383,49 +362,28 @@ export default {
 </script>
 
 <style scoped>
-/* .van-nav-bar {
-  position: fixed;
+.van-nav-bar {
+  position: sticky;
   width: 100%;
   top: 0;
   z-index: 10;
-} */
+}
 #myinvoice {
   background-color: #f7f8fa;
   height: 100vh;
-  font-size: 1.5rem;
-}
-#myinvoice_head {
-  background-color: #f7f8fa;
-  position: sticky;
-  top: 0;
-  z-index: 10;
 }
 #myinvoice_tabs {
   margin-top: 1rem;
+  position: sticky;
+  width: 100%;
+  top: 4.8rem;
+  z-index: 10;
 }
-#myinvoice_tags {
-  display: flex;
-  align-items: center;
-  height: 4.8rem;
-  background-color: #fff;
-  padding: 0 1.5rem;
+#myinvoice >>> .van-tab--active {
+  color: #108ee9;
 }
-#myinvoice_tags > div {
-  width: 8rem;
-  border: 1px #eeeeee solid;
-  border-radius: 4rem;
-  line-height: 3rem;
-  height: auto;
-  text-align: center;
-  margin-right: 1rem;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  color: #999999;
-}
-.activedBox {
-  border-color: #108ee9 !important;
+#myinvoice >>> .van-tabs__line {
   background-color: #108ee9;
-  color: #fff !important;
 }
 .list-box {
   position: relative;
@@ -433,12 +391,6 @@ export default {
 }
 .list-box .van-cell:first-child {
   margin-top: 1rem;
-}
-#myinvoice >>> .van-tab--active {
-  color: #108ee9;
-}
-#myinvoice >>> .van-tabs__line {
-  background-color: #108ee9;
 }
 .diy-content {
   color: #ff3b30;

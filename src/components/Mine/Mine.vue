@@ -67,7 +67,7 @@
         <img :src="icon.invoice" @click="goMyInvoice" />
         <p>我的凭证</p>
       </div>
-      <div id="mine_action_undealed">
+      <div id="mine_action_undealed" @click="goPendingInvoice">
         <img :src="icon.undealed" />
         <p>待{{ info.level ? (info.level == 2 ? "审核" : "处理") : "" }}凭证</p>
       </div>
@@ -139,6 +139,12 @@ export default {
           query: { id: this.info.account },
         });
       }
+    },
+    goPendingInvoice() {
+      this.$router.push({
+        name: "PendingInvoice",
+        query: { id: this.info.account },
+      });
     },
   },
   mounted() {

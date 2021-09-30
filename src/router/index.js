@@ -15,8 +15,8 @@ import RegisterByPhone from '../components/Register/RegisterByPhone';
 import ForgetWithPhone from '../components/Forget/ForgetWithPhone';
 import Home from '../components/Home/Home';
 import Mine from '../components/Mine/Mine';
-import MyInvoice from '../components/Mine/MyInvoice';
-import MyInvoiceImg from '../components/Mine/MyInvoiceImg';
+import MyInvoice from '../components/Mine/myInvoice/MyInvoice';
+import MyInvoiceImg from '../components/Mine/myInvoice/MyInvoiceImg';
 import Message from '../components/Message/Message';
 import MessageDetail from '../components/Message/MessageDetail';
 import SetUp from '../components/Mine/SetUp';
@@ -24,9 +24,12 @@ import Agreement from '../components/Mine/Agreement';
 import AboutUs from '../components/Mine/AboutUs';
 import EditInfo from '../components/Mine/EditInfo';
 import Upload from "../components/Home/children/upload"
-import AdminInvoice from "../components/Mine/AdminInvoice"
-import AdminInvoiceDetail from "../components/Mine/AdminInvoiceDetail"
-import InvoiceEditRecord from "../components/Mine/InvoiceEditRecord"
+import AdminInvoice from "../components/Mine/myInvoice/AdminInvoice"
+import AdminInvoiceDetail from "../components/Mine/myInvoice/AdminInvoiceDetail"
+import InvoiceEditRecord from "../components/Mine/myInvoice/InvoiceEditRecord"
+import PendingInvoice from "../components/Mine/pendingInvoice/PendingInvoice"
+import InvoiceExamine from "../components/Mine/pendingInvoice/InvoiceExamine"
+import InvoiceEdit from "../components/Mine/pendingInvoice/InvoiceEdit"
 
 Vue.use(Router)
 
@@ -73,6 +76,21 @@ export default new Router({
       path: '/mine/invoiceEditRecord',
       name: 'InvoiceEditRecord',
       component: InvoiceEditRecord
+    },
+    {
+      path: '/mine/pendingInvoice',
+      name: 'PendingInvoice',
+      component: PendingInvoice
+    },
+    {
+      path: '/mine/invoiceExamine',
+      name: 'InvoiceExamine',
+      component: InvoiceExamine
+    },
+    {
+      path: '/mine/invoiceEdit',
+      name: 'InvoiceEdit',
+      component: InvoiceEdit
     },
     {
       path: '/mine/myinvoiceimg',
