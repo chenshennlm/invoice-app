@@ -30,14 +30,21 @@ import {
   Dialog,
   NoticeBar,
   Uploader,
+<<<<<<< HEAD
   SwipeCell,
   DropdownMenu, DropdownItem
+=======
+  Card,
+  ImagePreview
+>>>>>>> 84e75b51d31b2da36d34c2f1241004e194481d1c
 } from 'vant';
 import store from 'tool/store.js'
 
 
 Vue.config.productionTip = false
 
+Vue.use(ImagePreview)
+Vue.use(Card)
 Vue.use(Dialog)
 Vue.use(less)
 Vue.use(Button);

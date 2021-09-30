@@ -24,6 +24,10 @@ import Agreement from '../components/Mine/Agreement';
 import AboutUs from '../components/Mine/AboutUs';
 import EditInfo from '../components/Mine/EditInfo';
 import Upload from "../components/Home/children/upload"
+import AdminInvoice from "../components/Mine/AdminInvoice"
+import AdminInvoiceDetail from "../components/Mine/AdminInvoiceDetail"
+import InvoiceEditRecord from "../components/Mine/InvoiceEditRecord"
+
 Vue.use(Router)
 
 const originalPush = Router.prototype.push;
@@ -56,6 +60,21 @@ export default new Router({
       component: MyInvoice
     },
     {
+      path: '/mine/adminInvoice',
+      name: 'AdminInvoice',
+      component: AdminInvoice
+    },
+    {
+      path: '/mine/adminInvoiceDetail',
+      name: 'AdminInvoiceDetail',
+      component: AdminInvoiceDetail
+    },
+    {
+      path: '/mine/invoiceEditRecord',
+      name: 'InvoiceEditRecord',
+      component: InvoiceEditRecord
+    },
+    {
       path: '/mine/myinvoiceimg',
       name: 'MyInvoiceImg',
       component: MyInvoiceImg
@@ -80,7 +99,7 @@ export default new Router({
       name: 'AboutUs',
       component: AboutUs
     },
-    
+
     {
       path: '/mine/setUp',
       name: 'SetUp',
@@ -91,6 +110,7 @@ export default new Router({
       name: 'EditInfo',
       component: EditInfo
     },
+
     {
       path: '/login/first',
       name: 'FirstLogin',
@@ -153,9 +173,9 @@ export default new Router({
       component: HelloWorld
     },
     {
-      path:'/upload',
-      name:"Upload",
-      component:Upload
+      path: '/upload',
+      name: "Upload",
+      component: Upload
     }
   ]
 })
