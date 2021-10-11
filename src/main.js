@@ -35,12 +35,18 @@ import {
   Card,
   ImagePreview,
   Calendar,
+  Picker,
+  Checkbox,
+  CheckboxGroup,
 } from 'vant';
 import store from 'tool/store.js'
 
 
 Vue.config.productionTip = false
 
+Vue.use(CheckboxGroup)
+Vue.use(Checkbox)
+Vue.use(Picker)
 Vue.use(Calendar)
 Vue.use(ImagePreview)
 Vue.use(Card)

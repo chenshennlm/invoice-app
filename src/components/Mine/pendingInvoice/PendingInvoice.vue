@@ -63,6 +63,7 @@
         <van-cell @click="calendarShow = true">
           <van-field
             v-model="businessDate"
+            readonly
             label="业务日期"
             name="businessDate"
             placeholder="年/月/日"
@@ -71,13 +72,14 @@
         </van-cell>
         <van-calendar
           v-model="calendarShow"
-          @confirm="onConfirm"
+          @confirm="onDateConfirm"
           :show-confirm="false"
           get-container="#app"
         />
         <van-cell is-link @click="popupShow = true" center>
           <van-field
             v-model="businessType"
+            readonly
             label="业务类型"
             name="businessType"
             placeholder="请选择"
@@ -88,11 +90,20 @@
           v-model="popupShow"
           position="bottom"
           get-container="#app"
-          :style="{ height: '30%' }"
-          >内容</van-popup
+          :style="{ height: '50%' }"
+          round
         >
+          <van-picker
+            show-toolbar
+            :columns="columns"
+            @cancel="popupShow = false"
+            @confirm="onConfirm"
+          />
+        </van-popup>
         <div class="my-dialog-footer">
-          <van-button type="default" native-type="button" @click="dialogCancel"> 取消 </van-button>
+          <van-button type="default" native-type="button" @click="dialogCancel">
+            取消
+          </van-button>
           <van-button type="info" native-type="submit"> 提交 </van-button>
         </div>
       </van-form>
@@ -103,7 +114,7 @@
 <script>
 import { Toast } from "vant";
 import { getMonthThroughStr } from "../../../tool/GetDate";
-
+import { dateFormat } from "../../../tool/tool";
 const dataBase = [
   {
     uuid: "",
@@ -291,6 +302,7 @@ export default {
       userInfo: undefined,
       businessDate: "",
       businessType: "",
+      columns: [],
     };
   },
   computed: {
@@ -321,10 +333,11 @@ export default {
       this.userInfo = {
         icon: "https://img01.yzcdn.cn/vant/cat.jpeg",
         nickname: "周大侠",
-        level: "3",
+        level: "1",
         uuid: "4f5a4s5d4a5sdas4d564",
         account: "17766666665",
       };
+      this.columns = ["差旅费", "招待费", "其他"];
     },
     /**跳转到凭证详情页面 */
     goDetail(param) {
@@ -418,18 +431,30 @@ export default {
     updataInfo(param) {
       this.show = true;
     },
-    formatDate(date) {
-      return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
-    },
-    onConfirm(date) {
+
+    onDateConfirm(date) {
       this.calendarShow = false;
-      this.businessDate = this.formatDate(date);
+      this.businessDate = dateFormat("YYYY/mm/dd", date);
     },
-    dialogCancel(){
-        
+    dialogCancel() {
+      this.show = false;
+      this.resetForm();
     },
+    onConfirm(value) {
+      console.log(value);
+      this.businessType = value;
+      this.popupShow = false;
+    },
+    //弹窗提交
     onSubmit(values) {
       console.log("submit", values);
+      this.show = false;
+      this.resetForm();
+    },
+    //重置表单
+    resetForm() {
+      this.businessDate = "";
+      this.businessType = "";
     },
   },
   mounted() {
@@ -464,6 +489,9 @@ export default {
   font-size: 2.5rem;
   margin-right: 0.5rem;
 }
+.van-swipe-cell__right{
+  padding: 0;
+}
 .van-swipe-cell__right button {
   height: 100%;
   font-size: 1.5rem;
@@ -472,13 +500,13 @@ export default {
   background-color: #fc3950;
   border: 1px solid #fc3950;
 }
-.my-dialog-footer{
-    margin: 16px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+.my-dialog-footer {
+  margin: 1.6rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
-.my-dialog-footer button{
-    width: 50%;
+.my-dialog-footer button {
+  width: 50%;
 }
 </style>
