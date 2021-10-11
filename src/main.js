@@ -31,21 +31,22 @@ import {
   NoticeBar,
   Uploader,
   SwipeCell,
-  DropdownMenu, DropdownItem,
-  Card,
-  ImagePreview,
   Calendar,
   Picker,
+  DropdownMenu,
+  DropdownItem,
   Checkbox,
   CheckboxGroup,
+  Card,
+  ImagePreview,
+  Notify
+
 } from 'vant';
 import store from 'tool/store.js'
 
 
 Vue.config.productionTip = false
 
-Vue.use(CheckboxGroup)
-Vue.use(Checkbox)
 Vue.use(Picker)
 Vue.use(Calendar)
 Vue.use(ImagePreview)
@@ -76,7 +77,10 @@ Vue.use(NoticeBar);
 Vue.use(Uploader);
 Vue.use(SwipeCell);
 Vue.use(DropdownMenu);
-Vue.use( DropdownItem);
+Vue.use(DropdownItem);
+Vue.use(Checkbox);
+Vue.use(CheckboxGroup);
+Vue.use(Notify);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

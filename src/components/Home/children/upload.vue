@@ -19,6 +19,7 @@
         class="business_main"
         v-for="(item, index) in businessList"
         :key="index"
+        @click="$router.push('/home/uploadphoto')"
       >
         <div class="business_header">{{ item.title }}</div>
         <van-swipe-cell>
@@ -85,36 +86,53 @@
               label="业务日期:"
               type="date"
             /> -->
-            <form action="" method="post">
-
-<div>
-              <span>*</span>
-              <label for="">业务日期：</label>
-              <input type="date" required />
+            <form action="" method="post"></form>
+            <div class="Popup_form">
+              <div class="business_date">
+                <span>*</span>
+                <label for="">业务日期：</label>
+                <input type="month" required ref="dates" />
+              </div>
+              <div class="business_type">
+                <span>*</span>
+                <label for="">业务类型：</label>
+                <select
+                  ref="types"
+                  @change="changshowothers"
+                  v-model="selectvalue"
+                >
+                  <option
+                    ref="bsiness-type"
+                    v-for="(item, index) in optionlist"
+                    :key="index"
+                  >
+                    {{ item.text }}
+                  </option>
+                </select>
+              </div>
+              <div class="business_others" v-if="showothers">
+                <span>*</span>
+                <label for="">其他说明：</label>
+                <input
+                  type="text"
+                  required
+                  maxlength="20"
+                  placeholder="不多于20个字符"
+                  ref="others"
+                />
+              </div>
+              <div class="business_button">
+                <van-button
+                  type="default"
+                  @click="popupclickcanle"
+                  size="normal"
+                  >取消</van-button
+                >
+                <van-button type="info" @click="popupclicksure"
+                  >确定</van-button
+                >
+              </div>
             </div>
-            <div>
-              <span>*</span>
-              <label for="">业务类型：</label>
-              <select>
-                <option v-for="(item, index) in optionlist" :key="index">
-                  {{ item.text }}
-                </option>
-              </select>
-            </div>
-<div>
-              <span>*</span>
-              <label for="">其他说明：</label>
-              <input type="text" required  max="20"/>
-            </div>
-
-</form>
-            
-            <!-- <van-field
-            required
-              v-model="popuptype"
-              label="业务类型"
-              
-            /> -->
           </van-cell-group>
         </div>
       </div>
@@ -134,9 +152,11 @@ export default {
   data() {
     //这里存放数据
     return {
+      check: true,
+      showothers: false,
       popupdate: "", //新建业务时间
       popuptype: "", //业务类型
-      showpopup: true,
+      showpopup: false,
       businessnum: 0,
       selectedDate: "2021/11",
       showdate: false,
@@ -157,11 +177,11 @@ export default {
           title: "已发送",
         },
       ],
-
+      selectvalue: "请选择",
       optionlist: [
-        { text: "请选择"},
-        { text: "差旅费"},
-        { text: "招待费"},
+        { text: "请选择" },
+        { text: "差旅费" },
+        { text: "招待费" },
         { text: "其他" },
       ],
     };
@@ -170,7 +190,60 @@ export default {
   //方法集合
   methods: {
     showPopup() {
-      this.show = true;
+      this.showpopup = true;
+    },
+    // 增加业务页面点击取消
+    popupclickcanle() {
+      this.showpopup = false;
+    },
+    //增加业务页面点击确定按钮
+    popupclicksure() {
+      console.log("点击确定按钮");
+      this.showpopup = false;
+      console.log(this.$refs.dates.value);
+      if (this.$refs.types.value == "其他") {
+        if(this.$refs.others.value==''||this.$refs.dates.value == ""){
+          if (this.$refs.dates.value == "") {
+             this.$notify({
+            message: "请输入日期",
+            background: "#fff",
+            duration: 2000,
+          })
+          }else if (this.$refs.others.value == "") {
+             this.$notify({
+            message: "请输入其他说明",
+            background: "#fff",
+            duration: 2000,
+          });
+          }
+        }else{
+          console.log('验证通过');
+        }
+          
+      } else {
+        if (
+          this.$refs.dates.value == "" ||
+          this.$refs.types.value == "请选择"
+        ) {
+          if (this.$refs.dates.value == "") {
+            this.checkmsg = "请输入日期";
+             this.$notify({
+            message: "请输入日期",
+            background: "#fff",
+            duration: 2000,
+          });
+          } else if (this.$refs.types.value == "请选择") {
+             this.$notify({
+            message: "请选择类型",
+            background: "#fff",
+            duration: 2000,
+          });
+          }
+        }else{
+          console.log('验证通过');
+          
+        }
+      }
     },
     //返回首页
     onClickLeft() {
@@ -199,19 +272,6 @@ export default {
       }
       return val;
     },
-    //  beforeClose({ position, instance }) {
-    //   switch (position) {
-
-    //     case 'right':
-    //      this.$dialog.confirm({
-    //         message: '确定删除吗？',
-    //       }).then(() => {
-    //         instance.close();
-    //       });
-    //       break;
-    //   }
-
-    // },
     changelistmsg() {
       console.log("修改按钮");
     },
@@ -227,14 +287,37 @@ export default {
           console.log("点击确定之后执行的操作");
         });
     },
+
+    changshowothers() {
+      console.log(this.selectvalue);
+      if (this.selectvalue == "其他") {
+        this.showothers = true;
+      } else {
+        this.showothers = false;
+      }
+    },
   },
 
   created() {},
   //生命周期 - 挂载完成（可以访问DOM元素）
+
   mounted() {},
 };
 </script>
-<style lang="less" scope>
+<style lang="less">
+.van-notify {
+  height: 16rem;
+  width: 30rem;
+  left: 50%;
+  margin-left: -15rem;
+  position: absolute;
+  top: 50%;
+  margin-top: -8rem;
+  background: #fff;
+  border: 1px solid #ccc;
+  color: #666;
+}
+
 .upload_header {
   height: 5rem;
 }
@@ -360,22 +443,65 @@ export default {
   right: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 9999;
-    
-.Popup_main{
-  background: #fff;
+
+  .Popup_main {
+    background: #fff;
     width: 27rem;
     height: 24rem;
     padding: 1rem;
     position: absolute;
     top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          margin: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
   }
-  .Popup_list{
-  
+}
+.Popup_header {
+  font-size: 1.6rem;
+  font-weight: 600;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #dedede;
+}
+.business_date,
+.business_others,
+.business_type {
+  margin-top: 1rem;
+  span {
+    color: red;
   }
+  label {
+    font-size: 1.4rem;
+  }
+  input {
+    height: 3rem;
+    border: 1px solid #dedede;
+    width: 16rem;
+  }
+}
+.business_type {
+  select {
+    height: 3rem;
+    border: 1px solid #dedede;
+    width: 16rem;
+  }
+}
+.business_button {
+  width: calc(100% - 2rem);
+  margin-left: 1rem;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+  .van-button--normal {
+    padding: 0 4rem;
+  }
+}
+.Popup_form {
+  height: 17rem;
+}
+.checkMsg{
+ 
   
 }
 </style>

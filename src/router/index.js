@@ -31,6 +31,9 @@ import PendingInvoice from "../components/Mine/pendingInvoice/PendingInvoice"
 import InvoiceExamine from "../components/Mine/pendingInvoice/InvoiceExamine"
 import InvoiceEdit from "../components/Mine/pendingInvoice/InvoiceEdit"
 
+import Uploadphoto from "../components/Home/children/uploadphoto"
+import Toview from "../components/Home/children/toviewphoto"
+import Photograph from "../components/Home/children/photograph"
 Vue.use(Router)
 
 const originalPush = Router.prototype.push;
@@ -191,9 +194,24 @@ export default new Router({
       component: HelloWorld
     },
     {
-      path: '/upload',
+      path: '/home/upload',
       name: "Upload",
       component: Upload
+    },
+    {
+      path: '/home/uploadphoto',
+      name: "Uploadphoto",
+      component: Uploadphoto
+    },
+    {
+      path: '/home/toview',
+      name: 'Toview',
+      component: Toview
+    },
+    {
+      path: '/home/photograph',
+      name: 'photograph',
+      component: Photograph
     }
   ]
 })

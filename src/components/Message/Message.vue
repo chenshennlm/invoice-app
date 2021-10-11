@@ -3,7 +3,7 @@
     <van-nav-bar
       title="消息通知"
       left-arrow
-      @click-left="$router.push('/mine')"
+      @click-left="$router.go(-1)"
       @click-right="readAll"
     >
       <template #left>
