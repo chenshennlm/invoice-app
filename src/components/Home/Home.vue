@@ -3,23 +3,24 @@
     <div class="home_header">
       <van-nav-bar>
         <template #right>
-          <van-icon name="chat-o" dot />
+          <van-icon name="chat-o" dot @click="tomessage" />
         </template>
         <template #left>
           <span>会计做账APP</span>
         </template>
       </van-nav-bar>
-      <div class="header_remind">
+      <div class="header_remind"  @click="$router.push('/mine/messageDetail')">
         <van-notice-bar
           left-icon="volume-o"
           text="票据收据提醒，你有几张票据需要上传"
           :scrollable="scrollable"
           color="#fff"
+         
         />
       </div>
       <!-- 这里点击需要跳转到票据上传页面 -->
       <div class="header_upload">
-        <div class="upload_main" @click="$router.push('/upload')">
+        <div class="upload_main" @click="$router.push('/home/upload')">
           <img
             class="pic1"
             referrerpolicy="no-referrer"
@@ -37,7 +38,7 @@
         </div>
         <div class="pending_list">
           <ul>
-            <li>
+            <li >
               <div class="box1 flex-col">
                 <div class="outer2 flex-col"></div>
               </div>
@@ -45,7 +46,7 @@
                 <span class="pending_company">衡信科技有限公司票据</span>
                 <span class="pendign_date">2021/11</span>
               </div>
-              <div><van-icon name="arrow" /></div>
+              <div><van-icon name="arrow"   /></div>
             </li>
             <li>
               <div class="box1 flex-col">
@@ -112,6 +113,9 @@ export default {
     };
   },
   methods: {
+    tomessage(){
+      this.$router.push('/mine/message')
+    },
     // 点击确定触发事件
     chickconfirm(value){
       
@@ -197,7 +201,7 @@ mounted() {
 
 </script>
 
-<style scoped lang="less">
+<style lang="less"  scoped>
 .home_header {
   background: #108ee9;
   height: 16rem;

@@ -31,10 +31,21 @@ import {
   NoticeBar,
   Uploader,
   SwipeCell,
+<<<<<<< Updated upstream
   DropdownMenu, DropdownItem,
   Card,
   ImagePreview,
   Calendar,
+=======
+  DropdownMenu,
+   DropdownItem,
+   Checkbox, 
+   CheckboxGroup,
+  Card,
+  ImagePreview,
+  Notify
+
+>>>>>>> Stashed changes
 } from 'vant';
 import store from 'tool/store.js'
 
@@ -71,6 +82,9 @@ Vue.use(Uploader);
 Vue.use(SwipeCell);
 Vue.use(DropdownMenu);
 Vue.use( DropdownItem);
+Vue.use( Checkbox);
+Vue.use( CheckboxGroup);
+Vue.use(Notify);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

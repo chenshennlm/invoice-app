@@ -24,6 +24,7 @@ import Agreement from '../components/Mine/Agreement';
 import AboutUs from '../components/Mine/AboutUs';
 import EditInfo from '../components/Mine/EditInfo';
 import Upload from "../components/Home/children/upload"
+<<<<<<< Updated upstream
 import AdminInvoice from "../components/Mine/myInvoice/AdminInvoice"
 import AdminInvoiceDetail from "../components/Mine/myInvoice/AdminInvoiceDetail"
 import InvoiceEditRecord from "../components/Mine/myInvoice/InvoiceEditRecord"
@@ -31,6 +32,14 @@ import PendingInvoice from "../components/Mine/pendingInvoice/PendingInvoice"
 import InvoiceExamine from "../components/Mine/pendingInvoice/InvoiceExamine"
 import InvoiceEdit from "../components/Mine/pendingInvoice/InvoiceEdit"
 
+=======
+import AdminInvoice from "../components/Mine/AdminInvoice"
+import AdminInvoiceDetail from "../components/Mine/AdminInvoiceDetail"
+import InvoiceEditRecord from "../components/Mine/InvoiceEditRecord"
+import Uploadphoto from "../components/Home/children/uploadphoto"
+import Toview from "../components/Home/children/toviewphoto"
+import Photograph from "../components/Home/children/photograph"
+>>>>>>> Stashed changes
 Vue.use(Router)
 
 const originalPush = Router.prototype.push;
@@ -191,9 +200,24 @@ export default new Router({
       component: HelloWorld
     },
     {
-      path: '/upload',
+      path: '/home/upload',
       name: "Upload",
       component: Upload
+    },
+    {
+      path: '/home/uploadphoto',
+      name: "Uploadphoto",
+      component: Uploadphoto
+    },
+    {
+      path:'/home/toview',
+      name:'Toview',
+      component:Toview
+    },
+    {
+      path:'/home/photograph',
+      name:'photograph',
+      component:Photograph
     }
   ]
 })
