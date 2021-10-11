@@ -78,7 +78,7 @@
           v-if="info.level == 1 || info.level == 2"
           title="交接单管理"
           is-link
-          url="/"
+          to="/mine/handoverSheet"
         />
         <van-cell
           title="组织机构管理"

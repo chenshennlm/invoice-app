@@ -384,6 +384,7 @@ export default {
       //   this.start = start + 8;
       //   this.total = total;
       // });
+      this.loading = false;
     },
     onLoad() {
       let oldSize = this.listdata.length;

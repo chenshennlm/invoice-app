@@ -30,10 +30,15 @@ import InvoiceEditRecord from "../components/Mine/myInvoice/InvoiceEditRecord"
 import PendingInvoice from "../components/Mine/pendingInvoice/PendingInvoice"
 import InvoiceExamine from "../components/Mine/pendingInvoice/InvoiceExamine"
 import InvoiceEdit from "../components/Mine/pendingInvoice/InvoiceEdit"
+import HandoverSheet from "../components/Mine/handoverSheet/index"
+import HandoverSheetDetail from "../components/Mine/handoverSheet/HandoverSheetDetail"
+import BillDetail from "../components/Mine/handoverSheet/BillDetail"
 
 import Uploadphoto from "../components/Home/children/uploadphoto"
 import Toview from "../components/Home/children/toviewphoto"
 import Photograph from "../components/Home/children/photograph"
+
+
 Vue.use(Router)
 
 const originalPush = Router.prototype.push;
@@ -95,6 +100,22 @@ export default new Router({
       name: 'InvoiceEdit',
       component: InvoiceEdit
     },
+    {
+      path: '/mine/handoverSheet',
+      name: 'HandoverSheet',
+      component: HandoverSheet
+    },
+    {
+      path: '/mine/handoverSheetDetail',
+      name: 'HandoverSheetDetail',
+      component: HandoverSheetDetail
+    },
+    {
+      path: '/mine/billDetail',
+      name: 'BillDetail',
+      component: BillDetail
+    },
+    
     {
       path: '/mine/myinvoiceimg',
       name: 'MyInvoiceImg',
