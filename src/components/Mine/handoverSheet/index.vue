@@ -70,6 +70,7 @@
               class="my-card-item"
               v-for="(item, index) in listII"
               :key="index"
+              @click="showDetail(item)"
             >
               <div class="my-card-item-center">
                 <div>
@@ -89,6 +90,7 @@
               class="my-card-item"
               v-for="(item, index) in listIII"
               :key="index"
+              @click="showDetail(item)"
             >
               <div class="my-card-item-center">
                 <div>
@@ -108,6 +110,7 @@
               class="my-card-item"
               v-for="(item, index) in listIV"
               :key="index"
+              @click="showDetail(item)"
             >
               <div class="my-card-item-center">
                 <div>

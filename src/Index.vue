@@ -28,12 +28,12 @@ export default {
       active: 0,
       icon: {
         home: {
-          active: "/static/home-active.png",
-          inactive: "/static/home-inactive.png",
+          active: require("./assets/home-active.png"),
+          inactive: require("./assets/home-inactive.png"),
         },
         mine: {
-          active: "/static/mine-active.png",
-          inactive: "/static/mine-inactive.png",
+          active: require("./assets/mine-active.png"),
+          inactive: require("./assets/mine-inactive.png"),
         },
       },
     };
