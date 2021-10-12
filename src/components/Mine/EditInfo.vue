@@ -506,8 +506,8 @@ export default {
   top: 0;
 }
 .center {
-  margin-top: 46px;
-  padding: 16px 0;
+  margin-top: 7.2rem;
+  padding: 1rem 0;
   font-size: 1.5rem;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;

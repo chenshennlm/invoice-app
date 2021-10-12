@@ -5,7 +5,6 @@ import App from './App'
 import router from './router'
 import less from 'less';
 import 'vant/lib/index.css';
-
 import {
   Button,
   NavBar,

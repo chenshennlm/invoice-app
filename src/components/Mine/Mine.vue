@@ -94,6 +94,7 @@
 <script>
 import router from "../../router/index";
 // import { getMineDetail } from "../../action/MineAction";
+import { plusReady } from "../../tool/tool";
 
 export default {
   name: "Mine",
@@ -150,6 +151,11 @@ export default {
   mounted() {
     let account = router.history.current.query.id;
     this.getMineDetail(account);
+    if (window.plus) {
+      plusReady("dark");
+    } else {
+      document.addEventListener("plusready", plusReady, false);
+    }
   },
 };
 </script>

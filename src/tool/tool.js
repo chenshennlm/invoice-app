@@ -4,7 +4,7 @@
  * @param {*} date 
  * @returns 
  */
- export function dateFormat(fmt, date) {
+export function dateFormat(fmt, date) {
     let ret = "";
     date = new Date(date);
     const opt = {
@@ -26,4 +26,20 @@
         }
     }
     return fmt;
+}
+
+/**
+ * 更改移动端状态栏字体颜色
+ * @param {*} style 
+ * @returns 
+ */
+export function plusReady(style = 'dark') {
+    var type = plus.os.name;
+    if (type == "iOS") {
+        //do Something
+        plus.navigator.setStatusBarStyle(style);
+    } else {
+        //do Something
+        plus.navigator.setStatusBarStyle(style);
+    }
 }

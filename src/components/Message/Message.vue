@@ -108,8 +108,8 @@ export default {
   width: 100%;
   top: 0;
 }
-.center{
-    margin-top: 46px;
+.center {
+  margin-top: 7.2rem;
 }
 .van-nav-bar__left {
   color: #666666;

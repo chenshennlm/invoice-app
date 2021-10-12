@@ -1,13 +1,14 @@
 <template>
   <div id="app">
     <!-- <img src="./assets/logo.png"> -->
-    <keep-alive>
-      <router-view />
-    </keep-alive>
+    <router-view />
   </div>
 </template>
 
 <script>
+import { Toast } from "vant";
+import { plusReady } from "./tool/tool";
+
 export default {
   name: "App",
   data() {
@@ -29,6 +30,14 @@ export default {
       sessionStorage.setItem("store", JSON.stringify(this.$store.state));
     });
   },
+  mounted() {
+    console.log(window.plus, "-----------------");
+    if (window.plus) {
+      plusReady("dark");
+    } else {
+      document.addEventListener("plusready", plusReady, false);
+    }
+  },
 };
 </script>
 
@@ -38,16 +47,19 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #f7f8fa;
-  min-height: calc(100vh - 46px);
+  min-height: calc(100vh - 4.6rem);
   /*text-align: center;*/
   /*color: #2c3e50;*/
   /*margin-top: 60px;*/
 }
+.van-nav-bar {
+  padding-top: 2.4rem;
+}
 .van-nav-bar__content {
-  height: 48px;
+  height: 4.8rem;
 }
 .van-cell {
-  font-size: 16px;
-  line-height: 28px;
+  font-size: 1.6rem;
+  line-height: 2.8rem;
 }
 </style>

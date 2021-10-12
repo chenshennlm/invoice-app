@@ -83,14 +83,13 @@ export default {
   top: 0;
 }
 .content {
-  margin-top: 46px;
-  padding: 16px;
+  margin-top: 7.2rem;
+  padding: 1.6rem;
   font-size: 1.5rem;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #666666;
   line-height: 2.5rem;
   background-color: #fff;
-
 }
 </style>

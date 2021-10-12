@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <div class="home_header">
+      <!-- <div class="mobile-status-bar"></div> -->
       <van-nav-bar>
         <template #right>
           <van-icon name="chat-o" dot @click="tomessage" />
@@ -9,13 +10,12 @@
           <span>会计做账APP</span>
         </template>
       </van-nav-bar>
-      <div class="header_remind"  @click="$router.push('/mine/messageDetail')">
+      <div class="header_remind" @click="$router.push('/mine/messageDetail')">
         <van-notice-bar
           left-icon="volume-o"
           text="票据收据提醒，你有几张票据需要上传"
           :scrollable="scrollable"
           color="#fff"
-         
         />
       </div>
       <!-- 这里点击需要跳转到票据上传页面 -->
@@ -38,7 +38,7 @@
         </div>
         <div class="pending_list">
           <ul>
-            <li >
+            <li>
               <div class="box1 flex-col">
                 <div class="outer2 flex-col"></div>
               </div>
@@ -46,7 +46,7 @@
                 <span class="pending_company">衡信科技有限公司票据</span>
                 <span class="pendign_date">2021/11</span>
               </div>
-              <div><van-icon name="arrow"   /></div>
+              <div><van-icon name="arrow" /></div>
             </li>
             <li>
               <div class="box1 flex-col">
@@ -75,11 +75,11 @@
     <div class="home_statistics">
       <div class="statistics_header">
         <span class="left"> 票据统计 </span>
-        <span class="right" @click="changeshowdate">{{selectedDate}}</span>
+        <span class="right" @click="changeshowdate">{{ selectedDate }}</span>
       </div>
-  <div class="Statistical_chart">
-    <div id="Statistical_chart_main"></div>
-  </div>
+      <div class="Statistical_chart">
+        <div id="Statistical_chart_main"></div>
+      </div>
       <div class="date" v-if="showdate">
         <van-datetime-picker
           v-model="currentDate"
@@ -88,8 +88,8 @@
           :min-date="minDate"
           :max-date="maxDate"
           :formatter="formatter"
-         @confirm="chickconfirm"
-         @cancel=" chickcancel"
+          @confirm="chickconfirm"
+          @cancel="chickcancel"
         />
       </div>
     </div>
@@ -98,6 +98,7 @@
 
 <script>
 import { getMonthThroughStr } from "../../tool/GetDate";
+import { plusReady } from "../../tool/tool";
 //引入 echarts图表插件
 const echarts = require("echarts");
 export default {
@@ -109,30 +110,29 @@ export default {
       minDate: new Date(2010, 0, 1),
       maxDate: new Date(2021, 10, 1),
       currentDate: new Date(),
-      selectedDate:"2020/10"
+      selectedDate: "2020/10",
     };
   },
   methods: {
-    tomessage(){
-      this.$router.push('/mine/message')
+    tomessage() {
+      this.$router.push("/mine/message");
     },
     // 点击确定触发事件
-    chickconfirm(value){
-      
-this.showdate=false
-let temp=value.toString();
+    chickconfirm(value) {
+      this.showdate = false;
+      let temp = value.toString();
       let year = temp.substr(10, 5);
       let month = getMonthThroughStr(temp.substr(4, 3));
       this.selectedDate = year + "/" + month;
     },
-   //点击取消触发事件
-    chickcancel(){
-this.showdate=false
+    //点击取消触发事件
+    chickcancel() {
+      this.showdate = false;
     },
     changeshowdate() {
       this.showdate = true;
     },
-  
+
     formatter(type, val) {
       if (type === "year") {
         return `${val}年`;
@@ -142,63 +142,68 @@ this.showdate=false
       return val;
     },
     //票据统计图
-    Statisticalchart(){
-      var myChart = echarts.init(document.getElementById("Statistical_chart_main"));
-   var option = {
-    // title: {
-    //     text: ''
-    // },
-    tooltip: {},
-    legend: {
-        data: ['']
-    },
-    radar: {
-        // shape: 'circle',
-        name: {
-            textStyle: {
-                color: '#000',
-                // backgroundColor: '#999',
-                borderRadius: 3,
-                fontSize:10,
-                // padding: [3, 5]
-            }
+    Statisticalchart() {
+      var myChart = echarts.init(
+        document.getElementById("Statistical_chart_main")
+      );
+      var option = {
+        // title: {
+        //     text: ''
+        // },
+        tooltip: {},
+        legend: {
+          data: [""],
         },
-        indicator: [
-            { name: '待审核', max: 100},
-            { name: '待核对', max: 100},
-            { name: '待修改', max: 100},
-            { name: '已记账', max: 100},
-            { name: '已完成', max: 100},
-            { name: '已作废', max: 100},
-            
-        ],
-        radius: 30,
-        splitNumber: 4
-    },
-    series: [{
-        type: 'radar',
-         symbol: "none",
-        // lineStyle: {normal: {color:'#005AAF',width:4}},
-        areaStyle: {normal: {}},
-        data: [
-            {
+        radar: {
+          // shape: 'circle',
+          name: {
+            textStyle: {
+              color: "#000",
+              // backgroundColor: '#999',
+              borderRadius: 3,
+              fontSize: 10,
+              // padding: [3, 5]
+            },
+          },
+          indicator: [
+            { name: "待审核", max: 100 },
+            { name: "待核对", max: 100 },
+            { name: "待修改", max: 100 },
+            { name: "已记账", max: 100 },
+            { name: "已完成", max: 100 },
+            { name: "已作废", max: 100 },
+          ],
+          radius: 30,
+          splitNumber: 4,
+        },
+        series: [
+          {
+            type: "radar",
+            symbol: "none",
+            // lineStyle: {normal: {color:'#005AAF',width:4}},
+            areaStyle: { normal: {} },
+            data: [
+              {
                 value: [50, 30, 10, 20, 20, 20],
-                name: '票据状态'
-            }
-        ]
-    }]
-};
+                name: "票据状态",
+              },
+            ],
+          },
+        ],
+      };
       myChart.setOption(option);
+    },
   },
-  },
-  
-mounted() {
+
+  mounted() {
     this.Statisticalchart();
-
-  }
- 
+    if (window.plus) {
+      plusReady("light");
+    } else {
+      document.addEventListener("plusready", plusReady, false);
+    }
+  },
 };
-
 </script>
 
 <style lang="less"  scoped>
@@ -342,30 +347,29 @@ mounted() {
       font-size: 1.6rem;
       font-family: PingFangSC-Regular, PingFang SC;
     }
-    .right{
-      border: 1px solid #108EE9 ;
+    .right {
+      border: 1px solid #108ee9;
       font-size: 1.2rem;
-      color: #108EE9 ;
+      color: #108ee9;
       padding: 0.5rem;
     }
   }
-  .date{
+  .date {
     width: 100%;
     position: fixed;
     bottom: 0;
     z-index: 999;
   }
-  .Statistical_chart{
-background: #fff;
-margin-top: 1rem;
-// display: flex;
-// justify-content: center;
-    #Statistical_chart_main{
- width: 14rem;
-    height: 14rem;
-margin-left: 8rem;
+  .Statistical_chart {
+    background: #fff;
+    margin-top: 1rem;
+    // display: flex;
+    // justify-content: center;
+    #Statistical_chart_main {
+      width: 14rem;
+      height: 14rem;
+      margin-left: 8rem;
     }
-   
   }
 }
 </style>
