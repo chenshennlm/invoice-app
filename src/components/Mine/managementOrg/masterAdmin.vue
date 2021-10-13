@@ -18,6 +18,7 @@
         title="代理记账机构编码"  value="112112" />
 
        <van-cell 
+       @click="$router.push('/mine/companyname')"
        v-if="this.$route.query.level==1"
        
        title="组织机构名称管理"  is-link value="浙江衡信教育科技有限公司" />

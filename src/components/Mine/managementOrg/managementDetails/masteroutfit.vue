@@ -36,7 +36,7 @@
      v-model="show" title="代理记账机构编码" show-cancel-button>
    <div class="dialog_main">
       <label for="">代理记账机构编码：</label>
-    <input type="text" placeholder="请输入机构编码">
+    <input type="text" placeholder="请输入机构编码" >
    </div>
 </van-dialog>
   </div>

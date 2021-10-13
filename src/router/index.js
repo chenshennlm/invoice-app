@@ -40,6 +40,7 @@ import Masteradmin from "../components/Mine/managementOrg/masterAdmin"
 import Masteroutfit from "../components/Mine/managementOrg/managementDetails/masteroutfit"
 import Masterchangepeople from "../components/Mine/managementOrg/managementDetails/masterchangepeople"
 import Secondadmin from "../components/Mine/managementOrg/managementDetails/secondadmin"
+import Companyname from "../components/Mine/managementOrg/managementDetails/companyname"
 
 Vue.use(Router)
 
@@ -255,6 +256,11 @@ export default new Router({
       path:"/mine/secondadmin",
       name:"secondadmin",
       component:Secondadmin
+    },
+    {
+      path:"/mine/companyname",
+      name:"companyname",
+      component:Companyname
     }
   ]
 })
