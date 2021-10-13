@@ -147,11 +147,8 @@ export default {
         .then(() => {
           // on confirm
           console.log("删除成功");
-          this.$notify({
-            message: "删除成功",
-            background: "#fff",
-            duration: 10000,
-          });
+                              this.$toast.success("删除成功");
+
         })
         .catch(() => {
           // on cancel
@@ -171,15 +168,10 @@ export default {
         .then(() => {
           // on confirm
           console.log("删除成功");
-          this.$notify({
-            message: "已发送",
-            background: "#fff",
-            duration: 10000,
-          });
+         this.$toast.success("发送成功");
         })
         .catch(() => {
           // on cancel
-          console.log("取消删除");
         });
     },
     onClickLeft(){
@@ -213,7 +205,7 @@ export default {
 .upload_header {
   height: 5rem;
 }
-.van-nav-bar .van-icon {
+.van-nav-bar /deep/.van-icon {
   color: #979797;
   font-size: 2rem;
 }
@@ -288,13 +280,14 @@ export default {
   bottom: 0;
   display: flex;
   justify-content: space-between;
+  background: #fff;
   .right {
     flex: 2;
     padding: 0 0.5rem;
     margin-top: 1rem;
 
     .van-button {
-      width: 100%;
+      width: 23rem;
     }
   }
   .left {
@@ -365,7 +358,7 @@ export default {
   font-size: 1.6rem;
   font-weight:600 ;
   color: #1989fa;
-  top: 1rem;
+  top: 3.4rem;
   right: 1rem;
 }
 .uploadimg-msk{
@@ -411,5 +404,8 @@ export default {
   .van-button--default{
      width: 100%; 
    }
+}
+.upload_header_main{
+  margin-top: 2.4rem;
 }
 </style>

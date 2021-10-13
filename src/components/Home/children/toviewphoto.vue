@@ -15,7 +15,7 @@
     </div>
     <div class="toview-foot">
 <van-button @click="deletebill" type="danger">票据删除</van-button>
-<van-button type="default">票据发送</van-button>
+<van-button type="default" @click="sendfn">票据发送</van-button>
     </div>
 </div>
 </template>
@@ -53,11 +53,26 @@ onClickLeft() {
         .then(() => {
           // on confirm
           console.log("删除成功");
-          this.$notify({
-            message: "删除成功",
-            background: "#fff",
-            duration: 10000,
-          });
+                     this.$toast.success("删除成功");
+
+        })
+        .catch(() => {
+          // on cancel
+          console.log("取消删除");
+        });
+    },
+    //发送该票据
+    sendfn(){
+      this.$dialog
+        .confirm({
+          title: "发送确认",
+          message: "是否确定发送该票据",
+        })
+        .then(() => {
+          // on confirm
+          
+                     this.$toast.success("发送成功");
+
         })
         .catch(() => {
           // on cancel
@@ -83,24 +98,20 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 }
 </script>
 <style lang='less'  scoped>
-/deep/.van-notify {
-  height: 16rem;
-  width: 30rem;
-  left: 50%;
-  margin-left: -15rem;
-  position: absolute;
-  top: 50%;
-  margin-top: -8rem;
-  color: #666;
-  border: 1px solid #666;
-  z-index: 9999;
+.toview{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  background:#000;
+
 }
 .toview-main{
+  height: 48px;
   span{
     color: #fff;
      position: fixed;
     z-index: 9999;
-    top: 3rem;
+    top: 5.4rem;
     left: 50%;
      transform: translate(-50%);
   }
@@ -117,10 +128,8 @@ activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发
 }
 
 .toview-img{
-  margin-top: 4.5rem;
-  background:#000;
-  padding: 2rem 0;
-  min-height: 58rem;
+  padding: 1rem 0;
+  
   img{
     height: 52rem;
     width: 100%;

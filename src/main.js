@@ -30,17 +30,18 @@ import {
   NoticeBar,
   Uploader,
   SwipeCell,
-  Calendar,
   Picker,
+  ImagePreview,
+  Calendar,
   DropdownMenu,
   DropdownItem,
   Checkbox,
   CheckboxGroup,
   Card,
-  ImagePreview,
   Notify,
   Step,
   Steps,
+
 } from 'vant';
 import store from 'tool/store.js'
 

@@ -84,7 +84,9 @@
           title="组织机构管理"
           is-link
           :value="info.company ? info.company.name : ''"
-          url="/"
+          
+          @click="$router.push({ name: 'masteradmin', query: { level: info.level } })"
+
         />
       </van-cell-group>
     </div>

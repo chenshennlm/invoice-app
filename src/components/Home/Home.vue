@@ -81,6 +81,12 @@
         <div id="Statistical_chart_main"></div>
       </div>
       <div class="date" v-if="showdate">
+        <div id="Statistical_chart_main"></div>
+      </div>
+      
+    </div>
+    <div class="date" v-if="showdate">
+
         <van-datetime-picker
           v-model="currentDate"
           type="year-month"
@@ -92,7 +98,6 @@
           @cancel="chickcancel"
         />
       </div>
-    </div>
   </div>
 </template>
 
@@ -130,6 +135,7 @@ export default {
       this.showdate = false;
     },
     changeshowdate() {
+      console.log(111);
       this.showdate = true;
     },
 
@@ -249,7 +255,7 @@ export default {
   flex-direction: column;
   position: absolute;
   left: 50%;
-  margin-left: -4rem;
+  margin-left: -3rem;
   margin-top: -4rem;
   top: 50%;
 
@@ -266,7 +272,7 @@ export default {
   height: 5rem;
 }
 .home_pending {
-  margin-top: 6rem;
+  margin-top: 8.4rem;
   width: calc(100% - 2rem);
   margin-left: 1rem;
 

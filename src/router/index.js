@@ -33,11 +33,13 @@ import InvoiceEdit from "../components/Mine/pendingInvoice/InvoiceEdit"
 import HandoverSheet from "../components/Mine/handoverSheet/index"
 import HandoverSheetDetail from "../components/Mine/handoverSheet/HandoverSheetDetail"
 import BillDetail from "../components/Mine/handoverSheet/BillDetail"
-
 import Uploadphoto from "../components/Home/children/uploadphoto"
 import Toview from "../components/Home/children/toviewphoto"
 import Photograph from "../components/Home/children/photograph"
-
+import Masteradmin from "../components/Mine/managementOrg/masterAdmin"
+import Masteroutfit from "../components/Mine/managementOrg/managementDetails/masteroutfit"
+import Masterchangepeople from "../components/Mine/managementOrg/managementDetails/masterchangepeople"
+import Secondadmin from "../components/Mine/managementOrg/managementDetails/secondadmin"
 
 Vue.use(Router)
 
@@ -233,6 +235,26 @@ export default new Router({
       path: '/home/photograph',
       name: 'photograph',
       component: Photograph
+    },
+    {
+      path:"/mine/masteradmin",
+      name:"masteradmin",
+      component:Masteradmin
+    },
+    {
+      path:"/mine/masteroutfit",
+      name:"Masteroutfit",
+      component:Masteroutfit
+    },
+    {
+      path:"/mine/masterchangepeople",
+      name:"masterchangepeople",
+      component:Masterchangepeople
+    },
+    {
+      path:"/mine/secondadmin",
+      name:"secondadmin",
+      component:Secondadmin
     }
   ]
 })
