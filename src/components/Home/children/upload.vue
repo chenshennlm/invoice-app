@@ -184,9 +184,8 @@ export default {
           title: "已发送",
         },
       ],
-      selectvalue: "请选择",
+      selectvalue: "",
       optionlist: [
-        { text: "请选择" },
         { text: "差旅费" },
         { text: "招待费" },
         { text: "其他" },

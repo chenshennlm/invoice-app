@@ -79,6 +79,8 @@ methods: {
         console.log(this.level);
         if(this.level==1){
             this.$router.push({name:'masterchangepeople',query:{level:this.level}})
+        }else if(this.level==2){
+            this.$router.push({name:'secondadmin',query:{level:this.level}})
         }
     }
 

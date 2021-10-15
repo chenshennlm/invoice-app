@@ -10,9 +10,7 @@
         <van-icon name="arrow-left" color="#666666" size="16" />
       </template>
       <template #right>
-        <van-uploader :before-read="addInfo">
-          <span class="nav-right-style"> 新增 </span>
-        </van-uploader>
+
       </template>
     </van-nav-bar>
     <div class="page-content">

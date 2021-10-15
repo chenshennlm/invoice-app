@@ -34,40 +34,21 @@
       <div class="pending_main">
         <div class="pending_main_header">
           <span class="left">待处理</span>
-          <span class="right">更多</span>
+          <span class="right" @click="morepjlist">更多</span>
         </div>
         <div class="pending_list">
           <ul>
-            <li>
+            <li v-for="(item,index) in businessdata" :key="index">
               <div class="box1 flex-col">
                 <div class="outer2 flex-col"></div>
               </div>
               <div class="company_bills">
-                <span class="pending_company">衡信科技有限公司票据</span>
-                <span class="pendign_date">2021/11</span>
+                <span class="pending_company">{{item.companyname}}</span>
+                <span class="pendign_date">{{item.time}}</span>
               </div>
               <div><van-icon name="arrow" /></div>
             </li>
-            <li>
-              <div class="box1 flex-col">
-                <div class="outer2 flex-col"></div>
-              </div>
-              <div class="company_bills">
-                <span class="pending_company">衡信科技有限公司票据</span>
-                <span class="pendign_date">2021/11</span>
-              </div>
-              <div><van-icon name="arrow" /></div>
-            </li>
-            <li>
-              <div class="box1 flex-col">
-                <div class="outer2 flex-col"></div>
-              </div>
-              <div class="company_bills">
-                <span class="pending_company">衡信科技有限公司票据</span>
-                <span class="pendign_date">2021/11</span>
-              </div>
-              <div><van-icon name="arrow" /></div>
-            </li>
+           
           </ul>
         </div>
       </div>
@@ -102,6 +83,7 @@
 </template>
 
 <script>
+import { time } from 'echarts';
 import { getMonthThroughStr } from "../../tool/GetDate";
 import { plusReady } from "../../tool/tool";
 //引入 echarts图表插件
@@ -110,15 +92,65 @@ export default {
   name: "Home",
   data() {
     return {
+      info:{},
       showdate: false,
       scrollable: false,
       minDate: new Date(2010, 0, 1),
       maxDate: new Date(2021, 10, 1),
       currentDate: new Date(),
       selectedDate: "2020/10",
+businessdata:[
+    {
+        companyname:'衡信教育科技有限公司',
+        time:'2021/01',
+
+          },
+           {
+        companyname:'衡信教育科技有限公司',
+        time:'2021/10',
+        
+          },
+           {
+        companyname:'衡信教育科技有限公司',
+        time:'2021/02',
+          }
+]
     };
   },
   methods: {
+    //更多
+     getMineDetail(account = "") {
+      this.info = {
+        icon: "https://img01.yzcdn.cn/vant/cat.jpeg",
+        nickname: "周大侠",
+        level: "1",
+        uuid: "4f5a4s5d4a5sdas4d564",
+        account: "17766666665",
+      };
+      // getMineDetail(account).then((res) => {
+      //   console.log("---res", res);
+      //   this.info = res.data;
+      // });
+    },
+      getbusinessdata(){
+        this.businessdata=[
+        
+        ]
+      },
+    morepjlist(){
+      console.log(this.info);
+if (this.info.level == "1") {
+        this.$router.push({
+          name: "PendingInvoice",
+          query: { id: this.info.account },
+        });
+      } else {
+        this.$router.push({
+          name: "PendingInvoice",
+          query: { id: this.info.account },
+        });
+      }
+    },
     tomessage() {
       this.$router.push("/mine/message");
     },

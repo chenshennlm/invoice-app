@@ -41,7 +41,8 @@ import {
   Notify,
   Step,
   Steps,
-
+  Col, 
+  Row 
 } from 'vant';
 import store from 'tool/store.js'
 
@@ -84,6 +85,9 @@ Vue.use(DropdownItem);
 Vue.use(Checkbox);
 Vue.use(CheckboxGroup);
 Vue.use(Notify);
+
+Vue.use(Col);
+Vue.use(Row);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

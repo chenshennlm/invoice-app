@@ -73,24 +73,27 @@
     <div class="addpeople">
       <van-dialog 
       v-model="addshow" title="人员新增" show-cancel-button>
-      
+                  
         <div class="account_type">
           <label for="">账号类型：</label>
-          <select ref="accounttypes">
-            <option value="">请选择</option>
-            <option
-              value=""
-              v-for="(item, index) in accountnumbers"
-              :key="index"
-            >
-              {{ item.type }}
-            </option>
-          </select>
+                         <select
+                  
+                  @change="showaccounttype"
+                  v-model="selectvalue"
+                >
+                  <option
+                    
+                    v-for="(item, index) in  accountnumbers"
+                    :key="index"
+                  >
+                    {{ item.type }}
+                  </option>
+                </select>
         </div>
-        <div style="height:3rem">
+        <div style="height:5rem">
 <div class="account_num" v-if="showphone">
           <label for="">手机账号：</label>
-          <select name="" id="" ref="phonecode">
+          <select ref="phonecode">
             <option value="">请选择</option>
             <option value="">手机号</option>
             <option value="">手机号</option>
@@ -121,7 +124,7 @@ export default {
   data() {
     //这里存放数据
     return {
-      selectvalue: "请选择",
+      selectvalue: "",
       list: [
         {
           name: "张三",
@@ -145,7 +148,6 @@ export default {
         },
       ],
       addshow: false,
-      selectvalue: "请选择",
 
       loading: false,
       finished: false,
@@ -153,7 +155,7 @@ export default {
       changepelpleshow: false,
       showphone:false,
       showpt:false,
-      selectvalue: "请选择",
+  
 
     };
   },
@@ -226,7 +228,16 @@ export default {
       this.addshow = true;
     },
     showaccounttype(){
-      console.log(this.$refs.accounttypes.value);
+     if(this.selectvalue=='手机账号'){
+       console.log(222);
+      this. showphone=true
+       this.showpt=false
+     }else if(this.selectvalue=='平台账号'){
+       console.log(111);
+       this.showpt=true
+      this. showphone=false
+     }
+      console.log(this.selectvalue);
     }
   // beforeclose(e){
   //   console.log(111);
