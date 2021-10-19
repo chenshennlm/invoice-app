@@ -72,19 +72,23 @@
     </div>
     <div class="addpeople">
       <van-dialog 
-      v-model="addshow" title="人员新增" show-cancel-button>
+      v-model="addshow" title="人员新增"
+      :before-close="beforeclose"
+       show-cancel-button>
                   
         <div class="account_type">
           <label for="">账号类型：</label>
                          <select
                   
                   @change="showaccounttype"
-                  v-model="selectvalue"
+                  ref="codetypes"
                 >
+                <option value="请选择">请选择</option>
                   <option
                     
                     v-for="(item, index) in  accountnumbers"
                     :key="index"
+                    :value="item.type"
                   >
                     {{ item.type }}
                   </option>
@@ -94,17 +98,19 @@
 <div class="account_num" v-if="showphone">
           <label for="">手机账号：</label>
           <select ref="phonecode">
-            <option value="">请选择</option>
-            <option value="">手机号</option>
-            <option value="">手机号</option>
+            <option value="请选择">请选择</option>
+            <option :value="item.phone" v-for="(item,index) in peoplelist" :key="index">
+              {{item.phone}}
+            </option>
           </select>
         </div>
         <div class="account_num" v-if="showpt"> 
           <label for="">平台账号：</label>
-          <select name="" id="" ref="ptcode">
-            <option value="">请选择</option>
-            <option value="">平台账号</option>
-            <option value="">平台账号</option>
+          <select ref="ptcode">
+            <option value="请选择">请选择</option>
+            <option :value="item.platformaccount" v-for="(item,index) in peoplelist" :key="index">
+              {{item.platformaccount}}
+            </option>
           </select>
         </div>
         </div>
@@ -147,16 +153,30 @@ export default {
           type: "平台账号",
         },
       ],
-      addshow: false,
+      // 账号管理
+      peoplelist:[
+        {
+       name:'小黑',
+       phone:18237269725,
+          platformaccount: "1444565a48@qq.com",
+          identity: "职员",
 
+      },
+       {
+       name:'小蓝',
+       phone:18237269726,
+       platformaccount: "144456a5a48@qq.com",
+          identity: "职员",
+
+      }
+      ],
+      addshow: false,
       loading: false,
       finished: false,
       level: "",
       changepelpleshow: false,
       showphone:false,
       showpt:false,
-  
-
     };
   },
   //计算属性 类似于data概念
@@ -226,24 +246,61 @@ export default {
     // 添加人员
     addshowfn() {
       this.addshow = true;
+      
     },
     showaccounttype(){
-     if(this.selectvalue=='手机账号'){
-       console.log(222);
+      console.log();
+     if(this.$refs.codetypes.value=='手机账号'){
+      
       this. showphone=true
        this.showpt=false
-     }else if(this.selectvalue=='平台账号'){
-       console.log(111);
+     }else if(this.$refs.codetypes.value=='平台账号'){
+       
        this.showpt=true
       this. showphone=false
      }
-      console.log(this.selectvalue);
-    }
-  // beforeclose(e){
-  //   console.log(111);
-  //   console.log(this.$refs.accounttype.value);
+    },
+  beforeclose(e,so){
+if(e==='confirm'){
+console.log(this.$refs.codetypes.value);
+    if(this.$refs.codetypes.value=='手机账号'){
+      for(var i=0;i<this.peoplelist.length;i++){
+        console.log(this.peoplelist[i].phone);
+        console.log(this.$refs.phonecode.value);
+        if(this.peoplelist[i].phone==this.$refs.phonecode.value){
+          var item={
+            name:this.peoplelist[i].name,
+            phone:this.peoplelist[i].phone,
+            identity:'职员',
+            level:3
+          }
+          this.list.push(item)
+        }
+      }
+    }else if(this.$refs.codetypes.value=='平台账号'){
+          console.log(111);
+          for(var i=0;i<this.peoplelist.length;i++){
+            if(this.peoplelist[i]. platformaccount==this.$refs.ptcode.value){
+              var item={
+                name:this.peoplelist[i]. name,
+                phone:this.peoplelist[i]. phone,
+              platformaccount:this.peoplelist[i]. platformaccount,
+              level:3,
+              identity:this.peoplelist[i].identity
+              }
+              this.list.push(item)
+            }
+          }
+        }
+    so()
+}
+if(e==='cancel'){
+  so()
+}
+     
+    
 
-  // }
+  }
   },
   beforeCreate() {}, //生命周期 - 创建之前
   //生命周期 - 创建完成（可以访问当前this实例）

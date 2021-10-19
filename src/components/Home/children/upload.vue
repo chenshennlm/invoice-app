@@ -22,7 +22,7 @@
         :key="index"
         @click="$router.push('/home/uploadphoto')"
       >
-        <div class="business_header">{{ item.title }}</div>
+        <div class="business_header">{{ item.state }}</div>
         <div class="main">
           <van-swipe-cell >
              <template #default>
@@ -34,7 +34,7 @@
             </div>
             <div class="center">
               <span>2021年11月差旅报销</span>
-              <span>{{ item.title }}</span>
+              <span>{{ item.state }}</span>
             </div>
             <div class="right">
               <span>{{ businessnum }}张</span>
@@ -56,7 +56,7 @@
               square
               type="info"
               text="信息更改"
-              @click="changelistmsg"
+              @click="changelistmsg(index)"
             />
           </template>
         </van-swipe-cell>
@@ -144,6 +144,27 @@
         @cancel="chickcancel"
       />
     </div>
+    <van-dialog v-model="showchangemessage" title="信息变更" show-cancel-button>
+  <div class="changedata">
+      <label for="">业务日期：</label>
+      <input type="month">
+  </div>
+  <div class="changedata">
+    <label for="">业务类型：</label>
+    <select name="" id="" ref="changetypes" @click="showchangeothers">
+      <option value="请选择">请选择</option>
+      <option :value="item.text" v-for="(item,index) in optionlist" :key="index">
+        {{item.text}}
+      </option>
+    </select>
+  </div>
+  <div class="others changedata" >
+    <div v-if="showchangetypes">
+ <label for="">其他说明：</label>
+    <input type="text" maxlength="20">
+    </div>
+  </div>
+</van-dialog>
   </div>
 </template>
 
@@ -159,6 +180,8 @@ export default {
   data() {
     //这里存放数据
     return {
+      showchangetypes:false,
+      showchangemessage:false,
       check: true,
       showothers: false,
       popupdate: "", //新建业务时间
@@ -172,16 +195,20 @@ export default {
       currentDate: new Date(),
       businessList: [
         {
-          title: "未上传",
+          title:"2021年11月差旅报销",
+          state: "未上传",
         },
         {
-          title: "待审核",
+          title:"2021年11月差旅报销",
+           state: "待审核",
         },
         {
-          title: "未发送",
+          title:"2021年11月差旅报销",
+          state: "未发送",
         },
         {
-          title: "已发送",
+          title:"2021年11月差旅报销",
+           state: "已发送",
         },
       ],
       selectvalue: "",
@@ -195,6 +222,13 @@ export default {
 
   //方法集合
   methods: {
+    // 是否显示其他选择框
+    showchangeothers(){
+      if(this.$refs.changetypes.value=="其他"){
+        this.showchangetypes=true
+      }
+      console.log(this.$refs.changetypes.value);
+    },
     showPopup() {
       this.showpopup = true;
     },
@@ -258,8 +292,15 @@ export default {
       }
       return val;
     },
-    changelistmsg() {
+    // 修改信息
+    changelistmsg(index) {
+      this.showchangemessage=true
+      console.log(index);
       console.log("修改按钮");
+      console.log(
+      this.businessList[index]
+
+      );
     },
     // 删除
 
@@ -270,6 +311,7 @@ export default {
           message: "确定删除吗？",
         })
         .then(() => {
+          this.businessList.splice(index,1)
           console.log("点击确定之后执行的操作");
         });
     },
@@ -489,5 +531,17 @@ export default {
 .van-swipe-cell__right button {
   height: 100%;
   font-size: 1.5rem;
+}
+.changedata{
+  height: 3rem;
+  padding: 0.5rem 1rem;
+  input{
+    
+    width: 15rem;
+  }
+  select{
+    padding: 0.5rem;
+    width: 15rem;
+  }
 }
 </style>

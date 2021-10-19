@@ -4,7 +4,11 @@
       <!-- <div class="mobile-status-bar"></div> -->
       <van-nav-bar>
         <template #right>
-          <van-icon name="chat-o" dot @click="tomessage" />
+          <van-badge :dot="redmessage">
+          <van-icon name="chat-o"  @click="tomessage" />
+
+  <!-- <div class="child" /> -->
+</van-badge>
         </template>
         <template #left>
           <span>会计做账APP</span>
@@ -38,7 +42,8 @@
         </div>
         <div class="pending_list">
           <ul>
-            <li v-for="(item,index) in businessdata" :key="index">
+            <li v-for="(item,index) in businessdata" :key="index"
+            >
               <div class="box1 flex-col">
                 <div class="outer2 flex-col"></div>
               </div>
@@ -46,9 +51,8 @@
                 <span class="pending_company">{{item.companyname}}</span>
                 <span class="pendign_date">{{item.time}}</span>
               </div>
-              <div><van-icon name="arrow" /></div>
+              <div><van-icon name="arrow"  @click="toinvoiceExamine" /></div>
             </li>
-           
           </ul>
         </div>
       </div>
@@ -56,7 +60,7 @@
     <div class="home_statistics">
       <div class="statistics_header">
         <span class="left"> 票据统计 </span>
-        <span class="right" @click="changeshowdate">{{ selectedDate }}</span>
+        <span class="right" @click="changeshowdate">{{selectedDate }}</span>
       </div>
       <div class="Statistical_chart">
         <div id="Statistical_chart_main"></div>
@@ -66,8 +70,7 @@
       </div>
       
     </div>
-    <div class="date" v-if="showdate">
-
+    <div class="dates" v-if="showdate">
         <van-datetime-picker
           v-model="currentDate"
           type="year-month"
@@ -92,6 +95,7 @@ export default {
   name: "Home",
   data() {
     return {
+      redmessage:true,
       info:{},
       showdate: false,
       scrollable: false,
@@ -118,6 +122,15 @@ businessdata:[
     };
   },
   methods: {
+    toinvoiceExamine(){
+    console.log(this.info.level);
+      console.log(111);
+      if(this.info.level==1||this.info.level==2){
+        this.$router.push('/mine/invoiceExamine')
+      }else{
+        // this.$router.push('')
+      }
+    },
     //更多
      getMineDetail(account = "") {
       this.info = {
@@ -132,13 +145,13 @@ businessdata:[
       //   this.info = res.data;
       // });
     },
-      getbusinessdata(){
-        this.businessdata=[
+      // getbusinessdata(){
+      //   this.businessdata=[
         
-        ]
-      },
+      //   ]
+      // },
     morepjlist(){
-      console.log(this.info);
+      console.log(this.info.level);
 if (this.info.level == "1") {
         this.$router.push({
           name: "PendingInvoice",
@@ -156,6 +169,7 @@ if (this.info.level == "1") {
     },
     // 点击确定触发事件
     chickconfirm(value) {
+      console.log(value);
       this.showdate = false;
       let temp = value.toString();
       let year = temp.substr(10, 5);
@@ -166,12 +180,13 @@ if (this.info.level == "1") {
     chickcancel() {
       this.showdate = false;
     },
+    // 显示日期框
     changeshowdate() {
-      console.log(111);
       this.showdate = true;
     },
 
     formatter(type, val) {
+      
       if (type === "year") {
         return `${val}年`;
       } else if (type === "month") {
@@ -222,7 +237,7 @@ if (this.info.level == "1") {
             areaStyle: { normal: {} },
             data: [
               {
-                value: [50, 30, 10, 20, 20, 20],
+                value: [80, 80, 80, 80, 80, 80],
                 name: "票据状态",
               },
             ],
@@ -234,6 +249,7 @@ if (this.info.level == "1") {
   },
 
   mounted() {
+    this. getMineDetail()
     this.Statisticalchart();
     if (window.plus) {
       plusReady("light");
@@ -378,6 +394,7 @@ if (this.info.level == "1") {
   width: calc(100% - 2rem);
   margin-left: 1rem;
   margin-top: 1.5rem;
+
   .statistics_header {
     display: flex;
     justify-content: space-between;
@@ -392,22 +409,26 @@ if (this.info.level == "1") {
       padding: 0.5rem;
     }
   }
-  .date {
+ 
+  .Statistical_chart {
+    background: #fff;
+    margin-top: 1rem;
+    height: 14rem;
+    padding-bottom:1rem ;
+    position: relative;
+    #Statistical_chart_main {
+      width: 14rem;
+      height: 14rem;
+      position: absolute;
+      left: 50%;
+      margin-left: -7rem;
+    }
+  }
+}
+ .dates {
     width: 100%;
     position: fixed;
     bottom: 0;
     z-index: 999;
   }
-  .Statistical_chart {
-    background: #fff;
-    margin-top: 1rem;
-    // display: flex;
-    // justify-content: center;
-    #Statistical_chart_main {
-      width: 14rem;
-      height: 14rem;
-      margin-left: 8rem;
-    }
-  }
-}
 </style>

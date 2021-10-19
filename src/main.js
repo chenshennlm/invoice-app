@@ -42,13 +42,14 @@ import {
   Step,
   Steps,
   Col, 
-  Row 
+  Row ,
+  Badge
 } from 'vant';
 import store from 'tool/store.js'
 
 
 Vue.config.productionTip = false
-
+Vue.use(Badge);
 Vue.use(Step)
 Vue.use(Steps)
 Vue.use(Picker)
