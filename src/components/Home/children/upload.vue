@@ -75,12 +75,7 @@
         </div>
         <div class="Popup_list">
           <van-cell-group>
-            <!-- <van-field
-            required
-              v-model="popupdate"
-              label="业务日期:"
-              type="date"
-            /> -->
+           
             <form action="" method="post"></form>
             <div class="Popup_form">
               <div class="business_date">
@@ -198,10 +193,7 @@ export default {
           title:"2021年11月差旅报销",
           state: "未上传",
         },
-        {
-          title:"2021年11月差旅报销",
-           state: "待审核",
-        },
+       
         {
           title:"2021年11月差旅报销",
           state: "未发送",
@@ -210,6 +202,10 @@ export default {
           title:"2021年11月差旅报销",
            state: "已发送",
         },
+        
+         
+        
+        
       ],
       selectvalue: "",
       optionlist: [
@@ -350,6 +346,7 @@ export default {
   width: calc(100% - 2rem);
   margin-left: 1rem;
   margin-top: 3.4rem;
+  padding-bottom: 80px;
   .statistics_header {
     display: flex;
     justify-content: space-between;
@@ -386,27 +383,16 @@ export default {
     .left {
       .section5 {
         z-index: 18;
-        height: 4rem;
-        background: url(https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng65982b671b130a8e99c174bf1d8ac9e4f042122eb731426e4fbc8251d5f1219e) -0.054rem
-          0rem no-repeat;
-        background-size: 4rem 5rem;
+        height: 3.55rem;
+        background: url('../../../assets/reviewed.png') no-repeat;
+        background-size: 3.5rem 3.5rem;
         margin-top: 0.08rem;
-        width: 5rem;
+        width: 3.5rem;
         justify-content: flex-start;
         padding-top: 0.507rem;
         align-items: center;
       }
-      .group1 {
-        flex: 1;
-        z-index: 62;
-        width: 3.5rem;
-        height: 3.5rem;
-        margin-left: 0.5rem;
-        margin-top: 0.25rem;
-        background: url(https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngf315d80de147d8236ae6497319e1ab5b6dda23b5394d2bd5a975ddcf51681da4) -0.24rem -0.24rem
-          no-repeat;
-        background-size: 3.2rem 2.6rem;
-      }
+     
     }
     .center {
       flex: 4;

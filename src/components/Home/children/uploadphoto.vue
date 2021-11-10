@@ -21,9 +21,11 @@
         <span class="businessname">{{ businessName }}</span>
       </div>
       <div class="upload_img">
+        
         <van-checkbox-group v-model="checkboxGroup" ref="checkboxGroup">
           <!-- 未发送 -->
-          <div class="lists">
+  
+          <div class=" lists">
             <van-uploader :before-read="addInfo">
               <div class="upload_show" @click="showTypes">
                 <van-icon name="plus" />
@@ -34,31 +36,41 @@
           <div
             class="paper-lists lists"
             v-for="item in noSentdata"
-            :key="item.code"
+            :key="item.uuid"
           >
-            <van-checkbox :name="item.uuid" >
-              <img :src="item.imgUrl" alt="" @click="toview" />
+           <div class="imag">
+            <van-checkbox :name="item.uuid">
+              <img :src="item.imgUrl" alt="" @click.stop="toview" />
             </van-checkbox>
+             </div>
           </div>
           <!-- 待审核 -->
           <div
             class="paper-lists lists"
             v-for="toBerevieweddata in toBerevieweddata"
-            :key="toBerevieweddata.code"
+            :key="toBerevieweddata.uuid"
           >
-            <van-checkbox :name="toBerevieweddata.uuid" >
-              <img :src="toBerevieweddata.imgUrl" alt="" @click="toview" />
+            <div class="imag">
+            <van-checkbox :name="toBerevieweddata.uuid">
+            
+              <img :src="toBerevieweddata.imgUrl" alt="" @click.stop="toview" />
+
             </van-checkbox>
+              </div>
+
           </div>
           <!-- 已发送 -->
           <div
             class="paper-lists lists"
             v-for="hasBeensentdata in hasBeensentdata"
-            :key="hasBeensentdata.code"
+            :key="hasBeensentdata.uuid"
           >
-            <van-checkbox :name="hasBeensentdata.uuid" >
-              <img :src="hasBeensentdata.imgUrl" alt="" @click="toview" />
+            <div class="imag">
+
+            <van-checkbox :name="hasBeensentdata.uuid">
+              <img :src="hasBeensentdata.imgUrl" alt="" @click.stop="toview" />
             </van-checkbox>
+             </div>
           </div>
         </van-checkbox-group>
       </div>
@@ -80,22 +92,25 @@
         <van-button type="info">票据发送</van-button>
       </div>
     </div>
-       <div class="Popup" v-if=" changemsgshow">
+    <div class="Popup" v-if="changemsgshow">
       <div class="Popup_main">
         <div class="Popup_header">
           <span>新增业务</span>
         </div>
         <div class="Popup_list">
           <van-cell-group>
-            
-            <form action="" method="post"></form>
+      
             <div class="Popup_form">
               <div class="business_date">
                 <span>*</span>
                 <label for="">业务日期：</label>
-                <input type="month" format="yyyy-MM"
-
- required ref="dates" v-model="popuptime" />
+                <input
+                  type="month"
+                  format="yyyy-MM"
+                  required
+                  ref="dates"
+                  v-model="popuptime"
+                />
               </div>
               <div class="business_type">
                 <span>*</span>
@@ -164,10 +179,10 @@ export default {
       hasBeensentdata: [], //已发送
       checkboxGroup: [],
       checked: true,
-      changemsgshow:false,
-        showothers :false,
- popuptime: "2021年01月", //业务时间
-       selectvalue: "请选择",
+      changemsgshow: false,
+      showothers: false,
+      popuptime: "2021年01月", //业务时间
+      selectvalue: "请选择",
       optionlist: [
         { text: "请选择" },
         { text: "差旅费" },
@@ -185,7 +200,7 @@ export default {
     toview() {
       this.$router.push("/home/toview");
     },
-   
+
     checkedAll() {
       this.cancleall = true;
       this.checkedall = false;
@@ -227,18 +242,22 @@ export default {
     },
     // 信息更正
     clickChange() {
-      if(this.checkboxGroup.length==1){
-        var _this=this
-this.changemsgshow=true
-  for(let i=0;i<_this.dataList.length;i++){
-      if (this.checkboxGroup.includes(_this.dataList[i].uuid)) {
-               this.selectvalue= _this.dataList[i].type
-                console.log(_this.dataList[i].time);
-              }
-  }
-}else{
-  this.$toast('请选择一条数据')
-}
+       this.showothers=false
+      if (this.checkboxGroup.length == 1) {
+        var _this = this;
+        this.changemsgshow = true;
+        for (let i = 0; i < _this.dataList.length; i++) {
+          if (this.checkboxGroup.includes(_this.dataList[i].uuid)) {
+            this.selectvalue = _this.dataList[i].type;
+           
+          }
+        }
+         if( this.selectvalue=='其他'){
+              this.showothers=true
+            }
+      } else {
+        this.$toast("请选择一条数据");
+      }
     },
     // 选择其他时输入框出现
     changshowothers() {
@@ -250,46 +269,56 @@ this.changemsgshow=true
       }
     },
     //点击取消关闭更改窗口
-    
+
     popupclickcanle() {
-this.changemsgshow=false
+      this.changemsgshow = false;
     },
     //点击确定提交更改的数据
-    popupclicksure(){
-this.changemsgshow=false
-console.log(this.$refs.dates.value);
+    popupclicksure() {
+      this.changemsgshow = false;
+     
+      if(this.$refs.dates.value!=''){
+        console.log(this.selectvalue);
+        if(this.selectvalue!='请选择'){
+
+        }else{
+           this.$toast.fail("请选择业务类型");
+        }
+      }else{
+         
+           this.$toast.fail("请选择日期");
+        }
+      console.log(this.$refs.dates.value);
     },
     // 发送票据
     clicksend() {
-      if(this.checkboxGroup.length > 0){
- this.$dialog
-        .confirm({
-          title: "票据发送",
-          message: "是否确认发送已选择的票据",
-        })
-        .then(() => {
-          // on confirm
-        var _this = this;
+      if (this.checkboxGroup.length > 0) {
+        this.$dialog
+          .confirm({
+            title: "票据发送",
+            message: "是否确认发送已选择的票据",
+          })
+          .then(() => {
+            // on confirm
+            var _this = this;
 
-           for(var i=0;i<_this.dataList.length;i++){
-             console.log(222);
-             if(this.checkboxGroup.includes(_this.dataList[i].uuid)){
-               _this.dataList[i].state=2
-             }
-           }
+            for (var i = 0; i < _this.dataList.length; i++) {
+              console.log(222);
+              if (this.checkboxGroup.includes(_this.dataList[i].uuid)) {
+                _this.dataList[i].state = 2;
+              }
+            }
 
             _this.dataSorting();
-    
-          
-          this.$toast.success("发送成功");
-        })
-        .catch(() => {
-          // on cancel
-        });
-      }else{
-        this.$toast('至少选择一条数据')
+
+            this.$toast.success("发送成功");
+          })
+          .catch(() => {
+            // on cancel
+          });
+      } else {
+        this.$toast("至少选择一条数据");
       }
-     
     },
     onClickLeft() {
       this.$router.push("/home/upload");
@@ -312,7 +341,7 @@ console.log(this.$refs.dates.value);
             "https://img1.baidu.com/it/u=3902954602,1199377877&fm=26&fmt=auto",
           code: "15454556",
           time: "2021/10/01",
-          type:"差旅费"
+          type: "差旅费",
         },
 
         {
@@ -323,8 +352,7 @@ console.log(this.$refs.dates.value);
             "https://img1.baidu.com/it/u=3902954602,1199377877&fm=26&fmt=auto",
           code: "15454552",
           time: "2021/10/01",
-          type:"差旅费"
-
+          type: "差旅费",
         },
         {
           uuid: "as564df5sd4f6s4d5a6",
@@ -334,8 +362,7 @@ console.log(this.$refs.dates.value);
             "https://img1.baidu.com/it/u=3902954602,1199377877&fm=26&fmt=auto",
           code: "15454582",
           time: "2021/10/01",
-          type:"其他"
-
+          type: "其他",
         },
         {
           uuid: "d4f35s4d6fws4f5sd4f",
@@ -345,11 +372,11 @@ console.log(this.$refs.dates.value);
             "https://img1.baidu.com/it/u=3902954602,1199377877&fm=26&fmt=auto",
           code: "15454559",
           time: "2021/10/01",
-          type:"差旅费"
-
+          type: "差旅费",
         },
+        
       ];
-    
+
       this.dataSorting();
     },
     // 数据整理
@@ -379,7 +406,7 @@ console.log(this.$refs.dates.value);
 
     // 上传票据照片
     addInfo(file) {
-       if (file.type.includes("image")) {
+      if (file.type.includes("image")) {
         if (file.size > this.maxSize) {
           Toast(`文件大小不能超过 ${this.maxSize / 1024}kb`);
         } else {
@@ -413,13 +440,11 @@ console.log(this.$refs.dates.value);
   //生命周期 - 创建完成（可以访问当前this实例）
   created() {
     // this.dataSorting()
-    
   },
   beforeMount() {}, //生命周期 - 挂载之前
   //生命周期 - 挂载完成（可以访问DOM元素）
   mounted() {
     this.getData();
-   
   },
   beforeUpdate() {}, //生命周期 - 更新之前
   updated() {}, //生命周期 - 更新之后
@@ -479,6 +504,7 @@ console.log(this.$refs.dates.value);
   }
 }
 .upload_img {
+  
   .lists {
     display: inline-block;
     margin-left: 1.7rem;
@@ -487,21 +513,38 @@ console.log(this.$refs.dates.value);
 .paper-lists {
   width: 10rem;
   height: 10rem;
-  background: #f7f7f7;
+  // background: #f7f7f7;
+  background: url('../../../assets/woodiness.png');
   margin-top: 1rem;
   position: relative;
   .van-icon {
     font-size: 3rem;
     color: #108ee9;
   }
-  img {
-    width: 10rem;
-    height: 10rem;
-  }
+ 
+  
 }
-// #app {
-//   background: #fff;
-// }
+.van-checkbox{
+   height: 10rem;
+    width: 10rem;
+display: inline-block;
+    
+}
+ .imag{
+    height: 10rem;
+    width: 10rem;
+  position: relative;
+
+  }
+img {
+    width: 8rem;
+    height: 5rem;
+position: absolute;
+top: 50%;
+left: 50%;
+margin-top: -2.5rem;
+margin-left: -4rem;
+  }
 .upload_footer {
   height: 6rem;
   width: 100%;
@@ -643,7 +686,6 @@ console.log(this.$refs.dates.value);
   position: absolute;
   top: 0;
 }
-
 
 .Popup {
   position: absolute;

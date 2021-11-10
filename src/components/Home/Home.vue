@@ -5,10 +5,8 @@
       <van-nav-bar>
         <template #right>
           <van-badge :dot="redmessage">
-          <van-icon name="chat-o"  @click="tomessage" />
-
-  <!-- <div class="child" /> -->
-</van-badge>
+            <van-icon name="chat-o" @click="tomessage" />
+          </van-badge>
         </template>
         <template #left>
           <span>会计做账APP</span>
@@ -41,26 +39,21 @@
           <span class="right" @click="morepjlist">更多</span>
         </div>
         <div class="pending_list">
-          <ul>
-            <li v-for="(item,index) in businessdata" :key="index"
-            >
-              <div class="box1 flex-col">
-                <div class="outer2 flex-col"></div>
-              </div>
-              <div class="company_bills">
-                <span class="pending_company">{{item.companyname}}</span>
-                <span class="pendign_date">{{item.time}}</span>
-              </div>
-              <div><van-icon name="arrow"  @click="toinvoiceExamine" /></div>
-            </li>
-          </ul>
+         <div class="pending_list_main" v-for="(item,index) in businessdata" :key="index">
+           <span class="custom-title"></span>
+           <span class="center">
+             <span class="businessname">{{item.companyname}}</span>
+             <span class="pengingdate">{{item.time}}</span>
+           </span>
+           <van-icon name="arrow" />
+         </div>
         </div>
       </div>
     </div>
     <div class="home_statistics">
       <div class="statistics_header">
         <span class="left"> 票据统计 </span>
-        <span class="right" @click="changeshowdate">{{selectedDate }}</span>
+        <span class="right" @click="changeshowdate">{{ selectedDate }}</span>
       </div>
       <div class="Statistical_chart">
         <div id="Statistical_chart_main"></div>
@@ -68,25 +61,24 @@
       <div class="date" v-if="showdate">
         <div id="Statistical_chart_main"></div>
       </div>
-      
     </div>
     <div class="dates" v-if="showdate">
-        <van-datetime-picker
-          v-model="currentDate"
-          type="year-month"
-          title="统计时间设置"
-          :min-date="minDate"
-          :max-date="maxDate"
-          :formatter="formatter"
-          @confirm="chickconfirm"
-          @cancel="chickcancel"
-        />
-      </div>
+      <van-datetime-picker
+        v-model="currentDate"
+        type="year-month"
+        title="统计时间设置"
+        :min-date="minDate"
+        :max-date="maxDate"
+        :formatter="formatter"
+        @confirm="chickconfirm"
+        @cancel="chickcancel"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import { time } from 'echarts';
+import { time } from "echarts";
 import { getMonthThroughStr } from "../../tool/GetDate";
 import { plusReady } from "../../tool/tool";
 //引入 echarts图表插件
@@ -95,44 +87,42 @@ export default {
   name: "Home",
   data() {
     return {
-      redmessage:true,
-      info:{},
+      redmessage: true,
+      info: {},
       showdate: false,
       scrollable: false,
       minDate: new Date(2010, 0, 1),
       maxDate: new Date(2021, 10, 1),
       currentDate: new Date(),
       selectedDate: "2020/10",
-businessdata:[
-    {
-        companyname:'衡信教育科技有限公司',
-        time:'2021/01',
-
-          },
-           {
-        companyname:'衡信教育科技有限公司',
-        time:'2021/10',
-        
-          },
-           {
-        companyname:'衡信教育科技有限公司',
-        time:'2021/02',
-          }
-]
+      businessdata: [
+        {
+          companyname: "衡信教育科技有限公司",
+          time: "2021/01",
+        },
+        {
+          companyname: "衡信教育科技有限公司",
+          time: "2021/10",
+        },
+        {
+          companyname: "衡信教育科技有限公司",
+          time: "2021/02",
+        },
+      ],
     };
   },
   methods: {
-    toinvoiceExamine(){
-    console.log(this.info.level);
+    toinvoiceExamine() {
+      console.log(this.info.level);
       console.log(111);
-      if(this.info.level==1||this.info.level==2){
-        this.$router.push('/mine/invoiceExamine')
-      }else{
+      if (this.info.level == 1 || this.info.level == 2) {
+        this.$router.push("/mine/invoiceExamine");
+      } else {
         // this.$router.push('')
       }
     },
     //更多
-     getMineDetail(account = "") {
+    getMineDetail(account = "") {
       this.info = {
         icon: "https://img01.yzcdn.cn/vant/cat.jpeg",
         nickname: "周大侠",
@@ -145,14 +135,14 @@ businessdata:[
       //   this.info = res.data;
       // });
     },
-      // getbusinessdata(){
-      //   this.businessdata=[
-        
-      //   ]
-      // },
-    morepjlist(){
+    // getbusinessdata(){
+    //   this.businessdata=[
+
+    //   ]
+    // },
+    morepjlist() {
       console.log(this.info.level);
-if (this.info.level == "1") {
+      if (this.info.level == "1") {
         this.$router.push({
           name: "PendingInvoice",
           query: { id: this.info.account },
@@ -186,7 +176,6 @@ if (this.info.level == "1") {
     },
 
     formatter(type, val) {
-      
       if (type === "year") {
         return `${val}年`;
       } else if (type === "month") {
@@ -249,7 +238,7 @@ if (this.info.level == "1") {
   },
 
   mounted() {
-    this. getMineDetail()
+    this.getMineDetail();
     this.Statisticalchart();
     if (window.plus) {
       plusReady("light");
@@ -263,7 +252,7 @@ if (this.info.level == "1") {
 <style lang="less"  scoped>
 .home_header {
   background: #108ee9;
-  height: 16rem;
+  height: 20rem;
 }
 .van-nav-bar {
   background: #108ee9;
@@ -319,83 +308,71 @@ if (this.info.level == "1") {
   width: 5rem;
   height: 5rem;
 }
+
+
+.pending_list{
+  background: #fff;
+  margin-top: 10px;
+}
 .home_pending {
-  margin-top: 8.4rem;
+  box-shadow: 0px 1px 11px 0px rgba(226,234,255,0.5);
+  margin-top: 4.4rem;
   width: calc(100% - 2rem);
   margin-left: 1rem;
-
-  .pending_main {
-    .pending_main_header {
-      display: flex;
+  }
+ .pending_main_header{
+    display: flex;
       justify-content: space-between;
       .left {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
+        font-weight: 600;
       }
       .right {
         color: rgba(16, 142, 233, 1);
-        font-size: 1.6rem;
+        font-size: 14px;
       }
-    }
-    .pending_list {
-      margin-top: 1rem;
-      background: #fff;
-      ul {
-        li {
-          display: flex;
-          padding: 0.5rem 0.5rem;
-          align-items: center;
-          .box1 {
-            flex: 1;
-            z-index: 132;
-            height: 4.5rem;
-            background: url(https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng65982b671b130a8e99c174bf1d8ac9e4f042122eb731426e4fbc8251d5f1219e) -0.054rem
-              0rem no-repeat;
-            background-size: 4rem 5rem;
-            margin-top: 0.027rem;
-            width: 6rem;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            .outer2 {
-              z-index: 136;
-              width: 4rem;
-              height: 4rem;
-              background: url(https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng6541d2e4894e94e4e6797f54cfeb34dbbc62caf33583c496efdfbfdad4f6429f)
-                0.1rem 0.72rem no-repeat;
-              background-size: 2rem 3rem;
-              margin-left: 0.9em;
-            }
-          }
-          .company_bills {
-            flex: 4;
-            display: flex;
-            flex-direction: column;
-            // margin-left: rem;
+ }
 
-            .pending_company {
-              font-size: 1.6rem;
-            }
-            .pendign_date {
-              font-size: 1.4rem;
-            }
-          }
-          .van-icon-arrow {
-            flex: 1;
-            // margin-left: 8rem;
-            font-size: 2.5rem;
-            color: #cdcdcd;
-          }
-        }
-      }
-    }
-  }
+.pending_list_main{
+  display: flex;
+  padding: 0.5rem  1rem;
 }
+.pengingdate{
+  font-size: 12px;
+}
+.businessname{
+  font-size: 1.4rem;
+}
+.pending_list_main>.center{
+  flex: 8;
+  display: flex;
+  flex-direction: column;
+}
+.custom-title {
+  flex: 1;
+  display: inline-block;
+  height: 35px;
+  background: url("../../assets/homeiocn.png");
+  background-repeat: no-repeat;
+  background-size: 35px;
+  width: 35px;
+}
+.pengingdate{
+  color: #666666;
+}
+.pending_list .van-icon{
+  font-size: 20px !important;
+  color: #CCCCCC;
+  line-height: 35px;
+}
+
+
 .home_statistics {
   width: calc(100% - 2rem);
   margin-left: 1rem;
   margin-top: 1.5rem;
-
-  .statistics_header {
+  
+   .statistics_header {
     display: flex;
     justify-content: space-between;
     .left {
@@ -409,12 +386,15 @@ if (this.info.level == "1") {
       padding: 0.5rem;
     }
   }
- 
+  }
+
+
+
   .Statistical_chart {
     background: #fff;
     margin-top: 1rem;
     height: 14rem;
-    padding-bottom:1rem ;
+    padding-bottom: 1rem;
     position: relative;
     #Statistical_chart_main {
       width: 14rem;
@@ -424,11 +404,11 @@ if (this.info.level == "1") {
       margin-left: -7rem;
     }
   }
+
+.dates {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
 }
- .dates {
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    z-index: 999;
-  }
 </style>
