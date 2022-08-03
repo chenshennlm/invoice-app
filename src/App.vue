@@ -62,4 +62,5 @@ export default {
   font-size: 1.6rem;
   line-height: 2.8rem;
 }
+
 </style>

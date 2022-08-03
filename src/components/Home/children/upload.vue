@@ -16,14 +16,17 @@
       </div>
       <div></div>
       <div
+      
         class="business_main"
         v-for="(item, index) in businessList"
         :key="index"
         @click="$router.push('/home/uploadphoto')"
       >
-        <div class="business_header">{{ item.title }}</div>
-        <van-swipe-cell>
-          <div class="business_pj">
+        <div class="business_header">{{ item.state }}</div>
+        <div class="main">
+          <van-swipe-cell >
+             <template #default>
+               <div class="business_pj">
             <div class="left">
               <div class="section5 flex-col">
                 <div class="group1 flex-col"></div>
@@ -31,7 +34,7 @@
             </div>
             <div class="center">
               <span>2021年11月差旅报销</span>
-              <span>{{ item.title }}</span>
+              <span>{{ item.state }}</span>
             </div>
             <div class="right">
               <span>{{ businessnum }}张</span>
@@ -39,8 +42,11 @@
               <van-icon name="arrow" />
             </div>
           </div>
+              </template>
+         
           <template #right>
             <van-button
+
               square
               type="danger"
               text="删除"
@@ -50,24 +56,13 @@
               square
               type="info"
               text="信息更改"
-              @click="changelistmsg"
+              @click="changelistmsg(index)"
             />
           </template>
         </van-swipe-cell>
+        </div>
 
         <div id="Statistical_chart_main"></div>
-      </div>
-      <div class="date" v-if="showdate">
-        <van-datetime-picker
-          v-model="currentDate"
-          type="year-month"
-          title="统计时间设置"
-          :min-date="minDate"
-          :max-date="maxDate"
-          :formatter="formatter"
-          @confirm="chickconfirm"
-          @cancel="chickcancel"
-        />
       </div>
     </div>
     <div class="addbusiness" @click="showPopup">
@@ -80,12 +75,7 @@
         </div>
         <div class="Popup_list">
           <van-cell-group>
-            <!-- <van-field
-            required
-              v-model="popupdate"
-              label="业务日期:"
-              type="date"
-            /> -->
+           
             <form action="" method="post"></form>
             <div class="Popup_form">
               <div class="business_date">
@@ -137,6 +127,39 @@
         </div>
       </div>
     </div>
+    <div class="date" v-if="showdate">
+      <van-datetime-picker
+        v-model="currentDate"
+        type="year-month"
+        title="统计时间设置"
+        :min-date="minDate"
+        :max-date="maxDate"
+        :formatter="formatter"
+        @confirm="chickconfirm"
+        @cancel="chickcancel"
+      />
+    </div>
+    <van-dialog v-model="showchangemessage" title="信息变更" show-cancel-button>
+  <div class="changedata">
+      <label for="">业务日期：</label>
+      <input type="month">
+  </div>
+  <div class="changedata">
+    <label for="">业务类型：</label>
+    <select name="" id="" ref="changetypes" @click="showchangeothers">
+      <option value="请选择">请选择</option>
+      <option :value="item.text" v-for="(item,index) in optionlist" :key="index">
+        {{item.text}}
+      </option>
+    </select>
+  </div>
+  <div class="others changedata" >
+    <div v-if="showchangetypes">
+ <label for="">其他说明：</label>
+    <input type="text" maxlength="20">
+    </div>
+  </div>
+</van-dialog>
   </div>
 </template>
 
@@ -152,6 +175,8 @@ export default {
   data() {
     //这里存放数据
     return {
+      showchangetypes:false,
+      showchangemessage:false,
       check: true,
       showothers: false,
       popupdate: "", //新建业务时间
@@ -165,21 +190,25 @@ export default {
       currentDate: new Date(),
       businessList: [
         {
-          title: "未上传",
+          title:"2021年11月差旅报销",
+          state: "未上传",
+        },
+       
+        {
+          title:"2021年11月差旅报销",
+          state: "未发送",
         },
         {
-          title: "待审核",
+          title:"2021年11月差旅报销",
+           state: "已发送",
         },
-        {
-          title: "未发送",
-        },
-        {
-          title: "已发送",
-        },
+        
+         
+        
+        
       ],
-      selectvalue: "请选择",
+      selectvalue: "",
       optionlist: [
-        { text: "请选择" },
         { text: "差旅费" },
         { text: "招待费" },
         { text: "其他" },
@@ -189,6 +218,13 @@ export default {
 
   //方法集合
   methods: {
+    // 是否显示其他选择框
+    showchangeothers(){
+      if(this.$refs.changetypes.value=="其他"){
+        this.showchangetypes=true
+      }
+      console.log(this.$refs.changetypes.value);
+    },
     showPopup() {
       this.showpopup = true;
     },
@@ -200,48 +236,28 @@ export default {
     popupclicksure() {
       console.log("点击确定按钮");
       this.showpopup = false;
-      console.log(this.$refs.dates.value);
       if (this.$refs.types.value == "其他") {
-        if(this.$refs.others.value==''||this.$refs.dates.value == ""){
+        if (this.$refs.others.value == "" || this.$refs.dates.value == "") {
           if (this.$refs.dates.value == "") {
-             this.$notify({
-            message: "请输入日期",
-            background: "#fff",
-            duration: 2000,
-          })
-          }else if (this.$refs.others.value == "") {
-             this.$notify({
-            message: "请输入其他说明",
-            background: "#fff",
-            duration: 2000,
-          });
+            this.$toast.fail("请输入日期");
+          } else if (this.$refs.others.value == "") {
+            this.$toast.fail("请输入日期");
           }
-        }else{
-          console.log('验证通过');
+        } else {
+          console.log("验证通过");
         }
-          
       } else {
         if (
           this.$refs.dates.value == "" ||
           this.$refs.types.value == "请选择"
         ) {
           if (this.$refs.dates.value == "") {
-            this.checkmsg = "请输入日期";
-             this.$notify({
-            message: "请输入日期",
-            background: "#fff",
-            duration: 2000,
-          });
+            this.$toast.fail("请输入日期");
           } else if (this.$refs.types.value == "请选择") {
-             this.$notify({
-            message: "请选择类型",
-            background: "#fff",
-            duration: 2000,
-          });
+            this.$toast.fail("请输入日期");
           }
-        }else{
-          console.log('验证通过');
-          
+        } else {
+          console.log("验证通过");
         }
       }
     },
@@ -272,8 +288,15 @@ export default {
       }
       return val;
     },
-    changelistmsg() {
+    // 修改信息
+    changelistmsg(index) {
+      this.showchangemessage=true
+      console.log(index);
       console.log("修改按钮");
+      console.log(
+      this.businessList[index]
+
+      );
     },
     // 删除
 
@@ -284,6 +307,7 @@ export default {
           message: "确定删除吗？",
         })
         .then(() => {
+          this.businessList.splice(index,1)
           console.log("点击确定之后执行的操作");
         });
     },
@@ -304,24 +328,11 @@ export default {
   mounted() {},
 };
 </script>
-<style lang="less">
-.van-notify {
-  height: 16rem;
-  width: 30rem;
-  left: 50%;
-  margin-left: -15rem;
-  position: absolute;
-  top: 50%;
-  margin-top: -8rem;
-  background: #fff;
-  border: 1px solid #ccc;
-  color: #666;
-}
-
+<style lang="less" scoped>
 .upload_header {
   height: 5rem;
 }
-.van-nav-bar .van-icon {
+.van-nav-bar /deep/.van-icon {
   color: #979797;
   font-size: 2rem;
 }
@@ -334,7 +345,8 @@ export default {
 .home_statistics {
   width: calc(100% - 2rem);
   margin-left: 1rem;
-  margin-top: 1rem;
+  margin-top: 3.4rem;
+  padding-bottom: 80px;
   .statistics_header {
     display: flex;
     justify-content: space-between;
@@ -350,16 +362,11 @@ export default {
       padding: 0.5rem;
     }
   }
-  .date {
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    z-index: 999;
-  }
 }
 .business_main {
   background: #fff;
   margin-top: 1.5rem;
+  // width: 100%;
   .business_header {
     font-size: 1.6rem;
     color: #666;
@@ -367,33 +374,25 @@ export default {
     border-bottom: 1px solid #f2f2f2;
     line-height: 4rem;
   }
+  .main{
+    width: 363px;
+  }
   .business_pj {
     padding: 1rem;
     display: flex;
     .left {
       .section5 {
         z-index: 18;
-        height: 4rem;
-        background: url(https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPng65982b671b130a8e99c174bf1d8ac9e4f042122eb731426e4fbc8251d5f1219e) -0.054rem
-          0rem no-repeat;
-        background-size: 4rem 5rem;
+        height: 3.55rem;
+        background: url('../../../assets/reviewed.png') no-repeat;
+        background-size: 3.5rem 3.5rem;
         margin-top: 0.08rem;
-        width: 5rem;
+        width: 3.5rem;
         justify-content: flex-start;
         padding-top: 0.507rem;
         align-items: center;
       }
-      .group1 {
-        flex: 1;
-        z-index: 62;
-        width: 3.5rem;
-        height: 3.5rem;
-        margin-left: 0.5rem;
-        margin-top: 0.25rem;
-        background: url(https://lanhu.oss-cn-beijing.aliyuncs.com/SketchPngf315d80de147d8236ae6497319e1ab5b6dda23b5394d2bd5a975ddcf51681da4) -0.24rem -0.24rem
-          no-repeat;
-        background-size: 3.2rem 2.6rem;
-      }
+     
     }
     .center {
       flex: 4;
@@ -427,14 +426,13 @@ export default {
   bottom: 0;
   width: calc(100% - 2rem);
   margin-left: 1rem;
+  padding: 1rem 0;
+  background: #fff;
   button {
     width: 100%;
   }
 }
-.van-swipe-cell__right {
-  right: -1px;
-  padding: 1rem 0;
-}
+
 .Popup {
   position: absolute;
   top: 0;
@@ -500,8 +498,36 @@ export default {
 .Popup_form {
   height: 17rem;
 }
-.checkMsg{
- 
-  
+.date {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  .van-picker {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+}
+.van-swipe-cell__right{
+  padding: 0;
+}
+.van-swipe-cell__right button {
+  height: 100%;
+  font-size: 1.5rem;
+}
+.changedata{
+  height: 3rem;
+  padding: 0.5rem 1rem;
+  input{
+    
+    width: 15rem;
+  }
+  select{
+    padding: 0.5rem;
+    width: 15rem;
+  }
 }
 </style>

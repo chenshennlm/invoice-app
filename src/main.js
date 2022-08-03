@@ -30,23 +30,26 @@ import {
   NoticeBar,
   Uploader,
   SwipeCell,
-  Calendar,
   Picker,
+  ImagePreview,
+  Calendar,
   DropdownMenu,
   DropdownItem,
   Checkbox,
   CheckboxGroup,
   Card,
-  ImagePreview,
   Notify,
   Step,
   Steps,
+  Col, 
+  Row ,
+  Badge
 } from 'vant';
 import store from 'tool/store.js'
 
 
 Vue.config.productionTip = false
-
+Vue.use(Badge);
 Vue.use(Step)
 Vue.use(Steps)
 Vue.use(Picker)
@@ -83,6 +86,9 @@ Vue.use(DropdownItem);
 Vue.use(Checkbox);
 Vue.use(CheckboxGroup);
 Vue.use(Notify);
+
+Vue.use(Col);
+Vue.use(Row);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
