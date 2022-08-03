@@ -64,214 +64,214 @@
             </template>
           </van-field>
         </div>
-      </div>
-      <div v-if="editType == 'phoneNum'">
-        <van-field
-          v-model="value"
-          name="phoneNum"
-          label="手机号"
-          placeholder="请输入手机号"
-          :rules="[
-            { required: true },
-            {
-              validator: phoneNumValidator,
-              message: '请输入正确的手机号',
-            },
-          ]"
-          :disabled="isPassed"
-          type="tel"
-          @keyup.delete="clearContent"
-          @paste="pasting"
-          maxlength="11"
-        />
-        <van-field
-          v-model="verificationCode"
-          name="verificationCode"
-          center
-          clearable
-          label="验证码"
-          placeholder="请输入验证码"
-          v-if="!isPassed"
-          :rules="[
-            { required: true },
-            { validator, message: '验证码输入错误' },
-          ]"
-        >
-          <template #extra>
-            <s-identifyTool ref="code" />
-          </template>
-        </van-field>
-        <van-field
-          v-else
-          v-model="sms"
-          name="sms"
-          center
-          clearable
-          label="短信验证码"
-          placeholder="请输入短信验证码"
-          type="number"
-          maxlength="4"
-          :rules="[
-            { required: true },
-            {
-              pattern: patterns[2],
-              message: '请正确输入4位的短信验证码',
-            },
-          ]"
-        >
-          <template #button>
-            <van-button
-              v-if="!isSend"
-              size="small"
-              class="sms-button"
-              type="primary"
-              native-type="button"
-              @click="sendSMS"
-            >
-              发送验证码
-            </van-button>
-            <van-button
-              disabled
-              v-else
-              size="small"
-              class="sms-button"
-              type="default"
-            >
-              （{{ countdown }}）
-            </van-button>
-          </template>
-        </van-field>
-      </div>
-      <div v-if="editType == 'Email'">
-        <van-field
-          v-model="value"
-          name="Email"
-          label="邮箱"
-          placeholder="请输入邮箱"
-          :rules="[
-            { required: true },
-            {
-              validator: emailValidator,
-              message: '请输入正确的邮箱',
-            },
-          ]"
-          :disabled="isPassed"
-          type="email"
-          @keyup.delete="clearContent"
-          @paste="pasting"
-          maxlength="28"
-        />
-        <van-field
-          v-model="verificationCode"
-          name="verificationCode"
-          center
-          clearable
-          v-if="!isPassed"
-          label="验证码"
-          placeholder="请输入验证码"
-          :rules="[
-            { required: true },
-            { validator, message: '验证码输入错误' },
-          ]"
-        >
-          <template #extra>
-            <s-identifyTool ref="code" />
-          </template>
-        </van-field>
-        <van-field
-          v-else
-          v-model="sms"
-          center
-          clearable
-          label="邮箱验证码"
-          placeholder="请输入邮箱验证码"
-          type="number"
-          maxlength="4"
-          :rules="[
-            { required: true },
-            {
-              pattern: patterns[2],
-              message: '请正确输入4位的短信验证码',
-            },
-          ]"
-        >
-          <template #button>
-            <van-button
-              v-if="!isSend"
-              size="small"
-              class="sms-button"
-              type="primary"
-              native-type="button"
-              @click="sendEmail"
-            >
-              发送验证码
-            </van-button>
-            <van-button
-              disabled
-              v-else
-              size="small"
-              class="sms-button"
-              type="default"
-            >
-              （{{ countdown }}）
-            </van-button>
-          </template>
-        </van-field>
-      </div>
-      <div v-if="editType == 'password'">
-        <van-field
-          label="原密码"
-          v-model="oldPassword"
-          name="oldPassword"
-          placeholder="请输入原密码"
-          maxlength="18"
-          :rules="[
-            {
-              required: true,
-            },
-            {
-              pattern: patterns[4],
-              message: '输入6至18位的数字、大小写英文字母及特殊符号',
-            },
-          ]"
-          type="password"
-        />
-        <van-field
-          label="新密码"
-          v-model="newPassword"
-          name="newPassword"
-          placeholder="请输入新密码"
-          maxlength="18"
-          :rules="[
-            {
-              required: true,
-            },
-            {
-              pattern: patterns[4],
-              message: '输入6至18位的数字、大小写英文字母及特殊符号',
-            },
-          ]"
-          type="password"
-        />
-        <van-field
-          label="新密码确认"
-          v-model="confirmPassword"
-          name="confirmPassword"
-          placeholder="请输入"
-          maxlength="18"
-          :rules="[
-            {
-              required: true,
-            },
-            {
-              pattern: patterns[4],
-              message: '输入6至18位的数字、大小写英文字母及特殊符号',
-            },
-          ]"
-          type="password"
-        />
-        <div class="a-link">
-          <a href="123">忘记原密码，请点击</a>
+        <div v-if="editType == 'phoneNum'">
+          <van-field
+            v-model="value"
+            name="phoneNum"
+            label="手机号"
+            placeholder="请输入手机号"
+            :rules="[
+              { required: true },
+              {
+                validator: phoneNumValidator,
+                message: '请输入正确的手机号',
+              },
+            ]"
+            :disabled="isPassed"
+            type="tel"
+            @keyup.delete="clearContent"
+            @paste="pasting"
+            maxlength="11"
+          />
+          <van-field
+            v-model="verificationCode"
+            name="verificationCode"
+            center
+            clearable
+            label="验证码"
+            placeholder="请输入验证码"
+            v-if="!isPassed"
+            :rules="[
+              { required: true },
+              { validator, message: '验证码输入错误' },
+            ]"
+          >
+            <template #extra>
+              <s-identifyTool ref="code" />
+            </template>
+          </van-field>
+          <van-field
+            v-else
+            v-model="sms"
+            name="sms"
+            center
+            clearable
+            label="短信验证码"
+            placeholder="请输入短信验证码"
+            type="number"
+            maxlength="4"
+            :rules="[
+              { required: true },
+              {
+                pattern: patterns[2],
+                message: '请正确输入4位的短信验证码',
+              },
+            ]"
+          >
+            <template #button>
+              <van-button
+                v-if="!isSend"
+                size="small"
+                class="sms-button"
+                type="primary"
+                native-type="button"
+                @click="sendSMS"
+              >
+                发送验证码
+              </van-button>
+              <van-button
+                disabled
+                v-else
+                size="small"
+                class="sms-button"
+                type="default"
+              >
+                （{{ countdown }}）
+              </van-button>
+            </template>
+          </van-field>
+        </div>
+        <div v-if="editType == 'Email'">
+          <van-field
+            v-model="value"
+            name="Email"
+            label="邮箱"
+            placeholder="请输入邮箱"
+            :rules="[
+              { required: true },
+              {
+                validator: emailValidator,
+                message: '请输入正确的邮箱',
+              },
+            ]"
+            :disabled="isPassed"
+            type="email"
+            @keyup.delete="clearContent"
+            @paste="pasting"
+            maxlength="28"
+          />
+          <van-field
+            v-model="verificationCode"
+            name="verificationCode"
+            center
+            clearable
+            v-if="!isPassed"
+            label="验证码"
+            placeholder="请输入验证码"
+            :rules="[
+              { required: true },
+              { validator, message: '验证码输入错误' },
+            ]"
+          >
+            <template #extra>
+              <s-identifyTool ref="code" />
+            </template>
+          </van-field>
+          <van-field
+            v-else
+            v-model="sms"
+            center
+            clearable
+            label="邮箱验证码"
+            placeholder="请输入邮箱验证码"
+            type="number"
+            maxlength="4"
+            :rules="[
+              { required: true },
+              {
+                pattern: patterns[2],
+                message: '请正确输入4位的短信验证码',
+              },
+            ]"
+          >
+            <template #button>
+              <van-button
+                v-if="!isSend"
+                size="small"
+                class="sms-button"
+                type="primary"
+                native-type="button"
+                @click="sendEmail"
+              >
+                发送验证码
+              </van-button>
+              <van-button
+                disabled
+                v-else
+                size="small"
+                class="sms-button"
+                type="default"
+              >
+                （{{ countdown }}）
+              </van-button>
+            </template>
+          </van-field>
+        </div>
+        <div v-if="editType == 'password'">
+          <van-field
+            label="原密码"
+            v-model="oldPassword"
+            name="oldPassword"
+            placeholder="请输入原密码"
+            maxlength="18"
+            :rules="[
+              {
+                required: true,
+              },
+              {
+                pattern: patterns[4],
+                message: '输入6至18位的数字、大小写英文字母及特殊符号',
+              },
+            ]"
+            type="password"
+          />
+          <van-field
+            label="新密码"
+            v-model="newPassword"
+            name="newPassword"
+            placeholder="请输入新密码"
+            maxlength="18"
+            :rules="[
+              {
+                required: true,
+              },
+              {
+                pattern: patterns[4],
+                message: '输入6至18位的数字、大小写英文字母及特殊符号',
+              },
+            ]"
+            type="password"
+          />
+          <van-field
+            label="新密码确认"
+            v-model="confirmPassword"
+            name="confirmPassword"
+            placeholder="请输入"
+            maxlength="18"
+            :rules="[
+              {
+                required: true,
+              },
+              {
+                pattern: patterns[4],
+                message: '输入6至18位的数字、大小写英文字母及特殊符号',
+              },
+            ]"
+            type="password"
+          />
+          <div class="a-link">
+            <a href="123">忘记原密码，请点击</a>
+          </div>
         </div>
       </div>
     </van-form>
@@ -309,7 +309,7 @@ const patterns = [
   /1\d{10}/, //手机号
   /\d{4}/, //短信验证
   /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/, //邮箱
-  /[a-zA-Z0-9-*/+.~!@#$%^&*()]{6,18}$/,//密码
+  /[a-zA-Z0-9-*/+.~!@#$%^&*()]{6,18}$/, //密码
 ];
 export default {
   name: "EditInfo",
@@ -391,11 +391,11 @@ export default {
               if (this.newPassword === this.confirmPassword) {
                 Toast.success("修改成功");
                 this.$router.go(-1);
-              }else{
-              Toast('两次密码不一致')
+              } else {
+                Toast("两次密码不一致");
               }
-            }else{
-              Toast('原密码不正确')
+            } else {
+              Toast("原密码不正确");
             }
 
             break;
@@ -507,7 +507,7 @@ export default {
 }
 .center {
   margin-top: 7.2rem;
-  padding: 1rem 0;
+  padding: 1.6rem 0;
   font-size: 1.5rem;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
