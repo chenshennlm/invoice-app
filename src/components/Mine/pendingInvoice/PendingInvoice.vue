@@ -490,8 +490,9 @@ export default {
   font-size: 2.5rem;
   margin-right: 0.5rem;
 }
-.van-swipe-cell__right{
+.list-box >>> .van-swipe-cell__right{
   padding: 0;
+   right: -2px;
 }
 .van-swipe-cell__right button {
   height: 100%;
@@ -510,4 +511,5 @@ export default {
 .my-dialog-footer button {
   width: 50%;
 }
+
 </style>
